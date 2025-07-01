@@ -1,27 +1,49 @@
-# � Under Construction App 🏗️  
+# 📮 TempBox Beta 🧪  
+### *Disposable Email Generator for Privacy Pros* 🔒🎭  
 
-🚧 **This app is currently in development!** 🚧  
+🚧 **UNDER CONSTRUCTION** 🚧 *(but sneakily usable!)*  
 
-### 📌 Current Status:  
-- 🔨 **Building core features** *(Like a digital Bob the Builder!)*  
-- � **Fixing bugs** *(🐛→✨ = "Squash’n’shine")*  
-- 🎨 **Designing UI/UX** *(📱💻 = "Pixel-pushing in progress")*  
-- ⚙️ **Testing & Optimization** *(🧪🔍 = "Lab rat mode")*  
+---
 
-### ❓ **Missing/Sliding (Why?)**  
-- 🕳️ **Gaps in logic?** *(Brain 🧠 slipped on a 🍌 peel)*  
-- 📉 **Sliding deadlines?** *(🛝 > 🗓️ = "Time is a playground")*  
-- 🤷 **Undefined features?** *(🌫️ = "Fog of war… or code")*  
+## 🔥 **What’s This?**  
+A **temporary email address generator** that lets you:  
+- 🛡️ **Avoid spam** *(✉️➡️🗑️ = "Bye-bye, newsletters!")*  
+- 🕵️ **Stay anonymous** *(👤→🌫️ = "Who, me?")*  
+- ⚡ **Generate emails in 1 click** *(🎲📧 = "Luck of the inbox!")*  
 
-### 📅 Planned Updates:  
-- ✅ **Feature completion** *(🗓️ = "Soon™")*  
-- 🧹 **Code cleanup** *(🧼✨ = "Soap opera for devs")*  
-- 🚀 **Beta release!** *(📢 = "Watch this space!")*  
+*(Ideal for signups, verifications, and trolling bots 🤖💥)*  
 
-### 💡 **Dev Confessions:**  
-- *"I ‘meesed’ up… but I’ll slide into fixes!"* 😅  
-- *"Annotations are my rubber duck 🦆"*  
+---
 
-🔋 **Powered by:** ☕ *(Code fuel)* + ❤️ *(Chaotic enthusiasm)*  
+## 🛠️ **Current State** *(Beta Chaos Edition)*  
+| Feature          | Status              | Emoji-Annotation              |  
+|------------------|---------------------|-------------------------------|  
+| Email Generation | ✅ Working          | *(🌐✨ = "Magic exists!")*     |  
+| Inbox Viewer     | 🚧 Half-baked       | *(📦🔍 = "Peek-a-boo!")*      |  
+| Auto-Delete      | ❌ Missing          | *(⏳💣 = "Ticking time bomb")* |  
+| UI Polish        | 🎨 Sketchy          | *(🖍️😅 = "Picasso mode")*     |  
 
-📢 **Stay tuned—errors may vary!**  
+---
+
+## ❓ **Why "Propatnl"?** *(You Asked.)*  
+- Typo-friendly for **"Provisional"** 🏷️ *(Like your temp emails!)*  
+- Sounds like **"Propane"** ⛽ *(Because we’re cooking stuff up!)*  
+
+---
+
+## 💡 **Dev Notes** *(Confessions)*  
+- *"Auto-delete is ‘sliding’… like my motivation on Fridays."* 🛝  
+- *"UI looks like a 2005 MySpace page. Blame the 🍕 fuel."*  
+
+---
+
+## 🚀 **Roadmap** *(Dream Big!)*  
+- 📆 **v1.0**: Inbox magic ✨ *(No more placeholder 🧙‍♂️)*  
+- 🔐 **v2.0**: Self-destructing emails 💥📧 *(Poof!)*  
+
+---
+
+🔋 **Powered By**:  
+☕ *Caffeine* + 🤖 *Bots who hate spam more than you*  
+
+⚠️ **Warning**: Temp emails = 🎭 *Digital alter egos*. Use wisely!  
