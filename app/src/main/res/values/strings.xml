@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TempBox Beta</string>
+    <string name="inbox">Inbox</string>
+    <string name="create">Create</string>
+    <string name="account">Account</string>
+    <string name="temp_mail_title">Temporary Email Service</string>
+    <string name="powered_by_mail_tm">Powered by Mail.tm</string>
+</resources>
