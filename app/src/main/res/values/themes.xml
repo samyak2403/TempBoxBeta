@@ -1,23 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme with Gmail-inspired colors -->
     <style name="Base.Theme.TempBoxBeta" parent="Theme.Material3.DayNight">
-        <!-- Customize your light theme here. -->
+        <!-- Primary colors: Gmail Red -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        
+        <!-- Secondary colors: Gmail Blue -->
         <item name="colorSecondary">@color/md_theme_light_secondary</item>
         <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
         <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
         <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        
+        <!-- Tertiary colors: Gmail Green -->
         <item name="colorTertiary">@color/md_theme_light_tertiary</item>
         <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
         <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
         <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        
+        <!-- Error colors: Gmail Red -->
         <item name="colorError">@color/md_theme_light_error</item>
         <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
         <item name="colorOnError">@color/md_theme_light_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        
+        <!-- Background and Surface colors -->
         <item name="android:colorBackground">@color/md_theme_light_background</item>
         <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
         <item name="colorSurface">@color/md_theme_light_surface</item>
@@ -28,6 +36,12 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        
+        <!-- Gmail-specific customizations -->
+        <item name="android:statusBarColor">@color/gmail_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/gmail_background</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="Theme.TempBoxBeta" parent="Base.Theme.TempBoxBeta" />
@@ -35,5 +49,57 @@
     <style name="Theme.TempBoxBeta.NoActionBar" parent="Theme.TempBoxBeta">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    
+    <!-- Gmail-style Bottom Navigation -->
+    <style name="Widget.TempBoxBeta.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/gmail_background</item>
+        <item name="itemIconTint">@color/gmail_bottom_nav_selector</item>
+        <item name="itemTextColor">@color/gmail_bottom_nav_selector</item>
+        <item name="elevation">8dp</item>
+        <item name="android:elevation">8dp</item>
+    </style>
+    
+    <!-- Gmail-style Toolbar -->
+    <style name="Widget.TempBoxBeta.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/gmail_background</item>
+        <item name="titleTextColor">@color/gmail_text_primary</item>
+        <item name="android:elevation">4dp</item>
+        <item name="elevation">4dp</item>
+    </style>
+    
+    <!-- Gmail-style Card -->
+    <style name="Widget.TempBoxBeta.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/gmail_card_background</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+    
+    <!-- Gmail-style Text Styles -->
+    <style name="TextAppearance.TempBoxBeta.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textColor">@color/gmail_text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    
+    <style name="TextAppearance.TempBoxBeta.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/gmail_text_primary</item>
+    </style>
+    
+    <style name="TextAppearance.TempBoxBeta.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/gmail_text_secondary</item>
+    </style>
+    
+    <!-- Gmail-style Button -->
+    <style name="Widget.TempBoxBeta.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/gmail_blue</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+    
+    <!-- Gmail-style Floating Action Button -->
+    <style name="Widget.TempBoxBeta.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/gmail_red</item>
+        <item name="tint">@color/white</item>
     </style>
 </resources>

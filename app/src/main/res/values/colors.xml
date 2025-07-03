@@ -3,59 +3,90 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Material Design 3 Light Theme Colors -->
-    <color name="md_theme_light_primary">#6750A4</color>
-    <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#EADDFF</color>
-    <color name="md_theme_light_onPrimaryContainer">#21005D</color>
-    <color name="md_theme_light_secondary">#625B71</color>
-    <color name="md_theme_light_onSecondary">#FFFFFF</color>
-    <color name="md_theme_light_secondaryContainer">#E8DEF8</color>
-    <color name="md_theme_light_onSecondaryContainer">#1D192B</color>
-    <color name="md_theme_light_tertiary">#7D5260</color>
-    <color name="md_theme_light_onTertiary">#FFFFFF</color>
-    <color name="md_theme_light_tertiaryContainer">#FFD8E4</color>
-    <color name="md_theme_light_onTertiaryContainer">#31111D</color>
-    <color name="md_theme_light_error">#BA1A1A</color>
-    <color name="md_theme_light_errorContainer">#FFDAD6</color>
-    <color name="md_theme_light_onError">#FFFFFF</color>
-    <color name="md_theme_light_onErrorContainer">#410002</color>
-    <color name="md_theme_light_background">#FFFBFE</color>
-    <color name="md_theme_light_onBackground">#1C1B1F</color>
-    <color name="md_theme_light_surface">#FFFBFE</color>
-    <color name="md_theme_light_onSurface">#1C1B1F</color>
-    <color name="md_theme_light_surfaceVariant">#E7E0EC</color>
-    <color name="md_theme_light_onSurfaceVariant">#49454F</color>
-    <color name="md_theme_light_outline">#79747E</color>
-    <color name="md_theme_light_inverseOnSurface">#F4EFF4</color>
-    <color name="md_theme_light_inverseSurface">#313033</color>
-    <color name="md_theme_light_inversePrimary">#D0BCFF</color>
+    <!-- Gmail-inspired Color Scheme -->
+    <!-- Primary: Gmail Red -->
+    <color name="gmail_red">#EA4335</color>
+    <color name="gmail_red_dark">#D33B2C</color>
+    <color name="gmail_red_light">#FFEBEE</color>
     
-    <!-- Material Design 3 Dark Theme Colors -->
-    <color name="md_theme_dark_primary">#D0BCFF</color>
-    <color name="md_theme_dark_onPrimary">#381E72</color>
-    <color name="md_theme_dark_primaryContainer">#4F378B</color>
-    <color name="md_theme_dark_onPrimaryContainer">#EADDFF</color>
-    <color name="md_theme_dark_secondary">#CCC2DC</color>
-    <color name="md_theme_dark_onSecondary">#332D41</color>
-    <color name="md_theme_dark_secondaryContainer">#4A4458</color>
-    <color name="md_theme_dark_onSecondaryContainer">#E8DEF8</color>
-    <color name="md_theme_dark_tertiary">#EFB8C8</color>
-    <color name="md_theme_dark_onTertiary">#492532</color>
-    <color name="md_theme_dark_tertiaryContainer">#633B48</color>
-    <color name="md_theme_dark_onTertiaryContainer">#FFD8E4</color>
-    <color name="md_theme_dark_error">#FFB4AB</color>
-    <color name="md_theme_dark_errorContainer">#93000A</color>
-    <color name="md_theme_dark_onError">#690005</color>
-    <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
-    <color name="md_theme_dark_background">#1C1B1F</color>
-    <color name="md_theme_dark_onBackground">#E6E1E5</color>
-    <color name="md_theme_dark_surface">#1C1B1F</color>
-    <color name="md_theme_dark_onSurface">#E6E1E5</color>
-    <color name="md_theme_dark_surfaceVariant">#49454F</color>
-    <color name="md_theme_dark_onSurfaceVariant">#CAC4D0</color>
-    <color name="md_theme_dark_outline">#938F99</color>
-    <color name="md_theme_dark_inverseOnSurface">#1C1B1F</color>
-    <color name="md_theme_dark_inverseSurface">#E6E1E5</color>
-    <color name="md_theme_dark_inversePrimary">#6750A4</color>
+    <!-- Secondary: Gmail Blue -->
+    <color name="gmail_blue">#4285F4</color>
+    <color name="gmail_blue_dark">#3367D6</color>
+    <color name="gmail_blue_light">#E8F0FE</color>
+    
+    <!-- Gmail UI Colors -->
+    <color name="gmail_background">#FFFFFF</color>
+    <color name="gmail_surface">#FAFAFA</color>
+    <color name="gmail_surface_variant">#F5F5F5</color>
+    <color name="gmail_outline">#E0E0E0</color>
+    
+    <!-- Text Colors -->
+    <color name="gmail_text_primary">#202124</color>
+    <color name="gmail_text_secondary">#5F6368</color>
+    <color name="gmail_text_hint">#9AA0A6</color>
+    
+    <!-- Material Design 3 Light Theme Colors (Gmail Style) -->
+    <color name="md_theme_light_primary">#EA4335</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#FFEBEE</color>
+    <color name="md_theme_light_onPrimaryContainer">#B71C1C</color>
+    <color name="md_theme_light_secondary">#4285F4</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#E8F0FE</color>
+    <color name="md_theme_light_onSecondaryContainer">#1A73E8</color>
+    <color name="md_theme_light_tertiary">#34A853</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#E8F5E8</color>
+    <color name="md_theme_light_onTertiaryContainer">#137333</color>
+    <color name="md_theme_light_error">#EA4335</color>
+    <color name="md_theme_light_errorContainer">#FFEBEE</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_onErrorContainer">#B71C1C</color>
+    <color name="md_theme_light_background">#FFFFFF</color>
+    <color name="md_theme_light_onBackground">#202124</color>
+    <color name="md_theme_light_surface">#FFFFFF</color>
+    <color name="md_theme_light_onSurface">#202124</color>
+    <color name="md_theme_light_surfaceVariant">#F5F5F5</color>
+    <color name="md_theme_light_onSurfaceVariant">#5F6368</color>
+    <color name="md_theme_light_outline">#E0E0E0</color>
+    <color name="md_theme_light_inverseOnSurface">#FFFFFF</color>
+    <color name="md_theme_light_inverseSurface">#202124</color>
+    <color name="md_theme_light_inversePrimary">#FFCDD2</color>
+    
+    <!-- Material Design 3 Dark Theme Colors (Gmail Dark Style) -->
+    <color name="md_theme_dark_primary">#FF6659</color>
+    <color name="md_theme_dark_onPrimary">#FFFFFF</color>
+    <color name="md_theme_dark_primaryContainer">#B71C1C</color>
+    <color name="md_theme_dark_onPrimaryContainer">#FFCDD2</color>
+    <color name="md_theme_dark_secondary">#8AB4F8</color>
+    <color name="md_theme_dark_onSecondary">#1A73E8</color>
+    <color name="md_theme_dark_secondaryContainer">#1A73E8</color>
+    <color name="md_theme_dark_onSecondaryContainer">#E8F0FE</color>
+    <color name="md_theme_dark_tertiary">#81C995</color>
+    <color name="md_theme_dark_onTertiary">#137333</color>
+    <color name="md_theme_dark_tertiaryContainer">#137333</color>
+    <color name="md_theme_dark_onTertiaryContainer">#E8F5E8</color>
+    <color name="md_theme_dark_error">#FF6659</color>
+    <color name="md_theme_dark_errorContainer">#B71C1C</color>
+    <color name="md_theme_dark_onError">#FFFFFF</color>
+    <color name="md_theme_dark_onErrorContainer">#FFCDD2</color>
+    <color name="md_theme_dark_background">#0F0F0F</color>
+    <color name="md_theme_dark_onBackground">#E8EAED</color>
+    <color name="md_theme_dark_surface">#1F1F1F</color>
+    <color name="md_theme_dark_onSurface">#E8EAED</color>
+    <color name="md_theme_dark_surfaceVariant">#2D2D2D</color>
+    <color name="md_theme_dark_onSurfaceVariant">#9AA0A6</color>
+    <color name="md_theme_dark_outline">#5F6368</color>
+    <color name="md_theme_dark_inverseOnSurface">#202124</color>
+    <color name="md_theme_dark_inverseSurface">#E8EAED</color>
+    <color name="md_theme_dark_inversePrimary">#EA4335</color>
+    
+    <!-- Additional Gmail Colors -->
+    <color name="gmail_unread_blue">#1A73E8</color>
+    <color name="gmail_archive_green">#34A853</color>
+    <color name="gmail_delete_red">#EA4335</color>
+    <color name="gmail_spam_yellow">#FBBC04</color>
+    <color name="gmail_divider">#E8EAED</color>
+    <color name="gmail_card_background">#FFFFFF</color>
+    <color name="gmail_selected_background">#E8F0FE</color>
 </resources>
