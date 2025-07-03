@@ -2,16 +2,17 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.TempBoxBeta.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginVertical="6dp"
-    app:cardElevation="3dp"
-    app:cardCornerRadius="12dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="2dp"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="8dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:rippleColor="?attr/colorPrimary"
+    app:rippleColor="@color/gmail_selected_background"
     app:cardPreventCornerOverlap="true"
     android:stateListAnimator="@null">
 
@@ -19,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="18dp">
+        android:padding="16dp"
+        android:background="@color/gmail_card_background">
 
         <!-- Header with sender and time -->
         <LinearLayout
@@ -37,11 +39,11 @@
 
                 <TextView
                     android:id="@+id/sender_name"
+                    style="@style/TextAppearance.TempBoxBeta.Headline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:fontFamily="sans-serif-medium"
@@ -49,10 +51,10 @@
 
                 <TextView
                     android:id="@+id/sender_email"
+                    style="@style/TextAppearance.TempBoxBeta.Caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="?attr/colorOnSurfaceVariant"
                     android:ellipsize="end"
                     android:maxLines="1"
                     tools:text="john.doe@example.com" />
@@ -75,8 +77,8 @@
                     <!-- Unread indicator -->
                     <View
                         android:id="@+id/unread_indicator"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/circle_unread"
                         android:visibility="gone"
@@ -90,14 +92,14 @@
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_attachment"
                         android:visibility="gone"
-                        app:tint="?attr/colorOnSurfaceVariant" />
+                        app:tint="@color/gmail_text_secondary" />
 
                     <TextView
                         android:id="@+id/time_text"
+                        style="@style/TextAppearance.TempBoxBeta.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="11sp"
                         tools:text="2h ago" />
 
                 </LinearLayout>
@@ -109,29 +111,27 @@
         <!-- Subject -->
         <TextView
             android:id="@+id/subject_text"
+            style="@style/TextAppearance.TempBoxBeta.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginBottom="6dp"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:fontFamily="sans-serif-medium"
-            android:lineSpacingExtra="2dp"
+            android:maxLines="1"
+            android:fontFamily="sans-serif"
             tools:text="Welcome to our service" />
 
         <!-- Preview text -->
         <TextView
             android:id="@+id/preview_text"
+            style="@style/TextAppearance.TempBoxBeta.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="13sp"
             android:ellipsize="end"
-            android:maxLines="3"
-            android:lineSpacingExtra="2dp"
-            android:alpha="0.87"
+            android:maxLines="2"
+            android:lineSpacingExtra="1dp"
             tools:text="Thank you for signing up! Here's what you need to know to get started..." />
 
     </LinearLayout>

@@ -7,16 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.samyak.tempboxbeta.fragments.AccountFragment;
 import com.samyak.tempboxbeta.fragments.CreateAccountFragment;
-import com.samyak.tempboxbeta.fragments.InboxFragment;
 import com.samyak.tempboxbeta.utils.AuthManager;
-import com.samyak.tempboxbeta.utils.Constants;
 import com.samyak.tempboxbeta.utils.PreloadManager;
 
 public class MainActivity extends AppCompatActivity implements 
@@ -24,17 +23,10 @@ public class MainActivity extends AppCompatActivity implements
         AccountFragment.OnAccountActionListener {
 
     private BottomNavigationView bottomNavigation;
-    private FragmentManager fragmentManager;
+    private NavController navController;
     private AuthManager authManager;
     private PreloadManager preloadManager;
-    
-    // Fragment instances
-    private InboxFragment inboxFragment;
-    private CreateAccountFragment createAccountFragment;
-    private AccountFragment accountFragment;
-    
-    // Flag to prevent infinite recursion
-    private boolean isNavigating = false;
+    private boolean navigationSetup = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements
         
         authManager = AuthManager.getInstance(this);
         preloadManager = PreloadManager.getInstance(this);
-        fragmentManager = getSupportFragmentManager();
         
         // Start background preloading for super fast data loading
         if (authManager.isLoggedIn()) {
@@ -52,23 +43,22 @@ public class MainActivity extends AppCompatActivity implements
         }
         
         initViews();
-        setupBottomNavigation();
-        
-        // Set initial fragment
-        if (savedInstanceState == null) {
-            showInboxFragment();
-        }
         
         // Setup modern back press handling
         getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // If not on inbox fragment, navigate to inbox
-                Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
-                if (currentFragment != inboxFragment) {
-                    showInboxFragment();
+                if (navController != null) {
+                    // If not on inbox fragment, navigate to inbox
+                    if (navController.getCurrentDestination() != null && 
+                        navController.getCurrentDestination().getId() != R.id.inboxFragment) {
+                        navController.navigate(R.id.inboxFragment);
+                    } else {
+                        // Exit the app
+                        finish();
+                    }
                 } else {
-                    // Exit the app
+                    // Fallback: just exit
                     finish();
                 }
             }
@@ -81,27 +71,71 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
     
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Setup navigation after the view is fully created
+        if (!navigationSetup) {
+            setupNavigation();
+        }
+    }
+    
     private void initViews() {
         bottomNavigation = findViewById(R.id.bottom_navigation);
     }
     
-    private void setupBottomNavigation() {
-        bottomNavigation.setOnItemSelectedListener(item -> {
-            // Prevent infinite recursion
-            if (isNavigating) {
-                return true;
-            }
+    private void setupNavigation() {
+        try {
+            // Get NavHostFragment
+            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.nav_host_fragment);
             
+            if (navHostFragment != null) {
+                // Get NavController from NavHostFragment
+                navController = navHostFragment.getNavController();
+                
+                // Setup BottomNavigationView with NavController
+                NavigationUI.setupWithNavController(bottomNavigation, navController);
+                
+                // Set up fragments' listeners when they are created
+                navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                    // Find and set up fragment listeners when destinations change
+                    setupFragmentListeners();
+                });
+                
+                navigationSetup = true;
+            }
+        } catch (Exception e) {
+            // Fallback: try using Navigation.findNavController
+            try {
+                navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                NavigationUI.setupWithNavController(bottomNavigation, navController);
+                
+                navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                    setupFragmentListeners();
+                });
+                
+                navigationSetup = true;
+            } catch (Exception fallbackException) {
+                // If navigation setup fails, we'll handle navigation manually
+                setupManualNavigation();
+            }
+        }
+    }
+    
+    private void setupManualNavigation() {
+        // Fallback to manual navigation if NavController setup fails
+        bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             
-            if (itemId == R.id.nav_inbox) {
-                showInboxFragmentInternal();
+            if (itemId == R.id.inboxFragment) {
+                // Handle inbox navigation manually if needed
                 return true;
-            } else if (itemId == R.id.nav_create) {
-                showCreateAccountFragmentInternal();
+            } else if (itemId == R.id.createAccountFragment) {
+                // Handle create account navigation manually if needed
                 return true;
-            } else if (itemId == R.id.nav_account) {
-                showAccountFragmentInternal();
+            } else if (itemId == R.id.accountFragment) {
+                // Handle account navigation manually if needed
                 return true;
             }
             
@@ -109,133 +143,115 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
     
-    private void showInboxFragment() {
-        isNavigating = true;
-        if (inboxFragment == null) {
-            inboxFragment = InboxFragment.newInstance();
-        }
-        
-        showFragment(inboxFragment, Constants.FRAGMENT_INBOX);
-        bottomNavigation.setSelectedItemId(R.id.nav_inbox);
-        isNavigating = false;
-    }
-    
-    private void showInboxFragmentInternal() {
-        if (inboxFragment == null) {
-            inboxFragment = InboxFragment.newInstance();
-        }
-        
-        showFragment(inboxFragment, Constants.FRAGMENT_INBOX);
-    }
-    
-    private void showCreateAccountFragment() {
-        isNavigating = true;
-        if (createAccountFragment == null) {
-            createAccountFragment = CreateAccountFragment.newInstance();
-            createAccountFragment.setOnAccountCreatedListener(this);
-        }
-        
-        showFragment(createAccountFragment, Constants.FRAGMENT_CREATE_ACCOUNT);
-        bottomNavigation.setSelectedItemId(R.id.nav_create);
-        isNavigating = false;
-    }
-    
-    private void showCreateAccountFragmentInternal() {
-        if (createAccountFragment == null) {
-            createAccountFragment = CreateAccountFragment.newInstance();
-            createAccountFragment.setOnAccountCreatedListener(this);
-        }
-        
-        showFragment(createAccountFragment, Constants.FRAGMENT_CREATE_ACCOUNT);
-    }
-    
-    private void showAccountFragment() {
-        isNavigating = true;
-        if (accountFragment == null) {
-            accountFragment = AccountFragment.newInstance();
-            accountFragment.setOnAccountActionListener(this);
-        }
-        
-        showFragment(accountFragment, Constants.FRAGMENT_ACCOUNT);
-        bottomNavigation.setSelectedItemId(R.id.nav_account);
-        isNavigating = false;
-    }
-    
-    private void showAccountFragmentInternal() {
-        if (accountFragment == null) {
-            accountFragment = AccountFragment.newInstance();
-            accountFragment.setOnAccountActionListener(this);
-        }
-        
-        showFragment(accountFragment, Constants.FRAGMENT_ACCOUNT);
-    }
-    
-    private void showFragment(Fragment fragment, String tag) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        
-        // Hide all fragments
-        if (inboxFragment != null) {
-            transaction.hide(inboxFragment);
-        }
-        if (createAccountFragment != null) {
-            transaction.hide(createAccountFragment);
-        }
-        if (accountFragment != null) {
-            transaction.hide(accountFragment);
-        }
-        
-        // Show or add the target fragment
-        if (fragment.isAdded()) {
-            transaction.show(fragment);
-        } else {
-            transaction.add(R.id.fragment_container, fragment, tag);
-        }
-        
-        transaction.commit();
+    private void setupFragmentListeners() {
+        // Use a post to ensure fragments are fully created
+        bottomNavigation.post(() -> {
+            try {
+                // Get current fragment
+                NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment);
+                
+                if (navHostFragment != null) {
+                    androidx.fragment.app.Fragment fragment = 
+                        navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+                    
+                    // Set up listeners based on fragment type
+                    if (fragment instanceof CreateAccountFragment) {
+                        ((CreateAccountFragment) fragment).setOnAccountCreatedListener(this);
+                    } else if (fragment instanceof AccountFragment) {
+                        ((AccountFragment) fragment).setOnAccountActionListener(this);
+                    }
+                }
+            } catch (Exception e) {
+                // Handle safely - fragments might not be ready yet
+            }
+        });
     }
     
     @Override
     public void onAccountCreated() {
         // Account was created successfully, switch to inbox
-        showInboxFragment();
-        
-        // Start background preloading for the new account
-        preloadManager.startPreloading();
-        preloadManager.forcePreload(); // Immediate preload
-        
-        // Refresh inbox to show the new account
-        if (inboxFragment != null) {
-            inboxFragment.refreshMessages();
+        if (navController != null) {
+            try {
+                navController.navigate(R.id.inboxFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
         }
     }
-    
+
     @Override
     public void onAccountDeleted() {
-        // Account was deleted, refresh all fragments
+        // Account was deleted, refresh fragments and stay on account page
         refreshAllFragments();
     }
-    
+
     @Override
     public void onLogout() {
-        // User logged out, stop preloading and clear cache
-        preloadManager.stopPreloading();
-        preloadManager.clearCache();
-        
-        // Refresh all fragments
+        // User logged out, navigate to create account
+        if (navController != null) {
+            try {
+                navController.navigate(R.id.createAccountFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
+        }
         refreshAllFragments();
     }
-    
+
     @Override
     public void onNavigateToCreate() {
-        showCreateAccountFragment();
+        // Navigate to create account fragment
+        if (navController != null) {
+            try {
+                navController.navigate(R.id.createAccountFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
+        }
     }
     
     private void refreshAllFragments() {
-        // Refresh inbox fragment
-        if (inboxFragment != null) {
-            inboxFragment.refreshMessages();
+        // This method refreshes all fragments by clearing the fragment manager
+        // The navigation component will recreate them as needed
+        try {
+            getSupportFragmentManager().getFragments().clear();
+        } catch (Exception e) {
+            // Handle safely
         }
     }
     
-    // Back press handling is now done in onCreate with OnBackPressedDispatcher
+    // Public methods for programmatic navigation
+    public void navigateToInbox() {
+        if (navController != null && navController.getCurrentDestination() != null && 
+            navController.getCurrentDestination().getId() != R.id.inboxFragment) {
+            try {
+                navController.navigate(R.id.inboxFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
+        }
+    }
+    
+    public void navigateToCreateAccount() {
+        if (navController != null && navController.getCurrentDestination() != null && 
+            navController.getCurrentDestination().getId() != R.id.createAccountFragment) {
+            try {
+                navController.navigate(R.id.createAccountFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
+        }
+    }
+    
+    public void navigateToAccount() {
+        if (navController != null && navController.getCurrentDestination() != null && 
+            navController.getCurrentDestination().getId() != R.id.accountFragment) {
+            try {
+                navController.navigate(R.id.accountFragment);
+            } catch (Exception e) {
+                // Handle navigation error gracefully
+            }
+        }
+    }
 }

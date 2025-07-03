@@ -143,8 +143,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 : "No Subject";
             subjectText.setText(subject);
             
-            // Fast time formatting
-            timeText.setText(DateUtils.getRelativeTimeString(message.getCreatedAt()));
+            // Smart time formatting with modern patterns
+            timeText.setText(DateUtils.formatSmartDate(message.getCreatedAt()));
             
             // Update read/unread state with visual feedback
             if (message.isSeen()) {
