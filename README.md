@@ -344,7 +344,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**📧 Made with ❤️ for the Android community**
+**📧 Made with ❤️ for Samyak2403**
 
 *TempBox Beta - Professional temporary email client*
 
