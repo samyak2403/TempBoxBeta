@@ -344,6 +344,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
+## Credits  
+- **[mail.tm](https://mail.tm/en/)** – Used for testing email-dependent features.  
+
+
 **📧 Made with ❤️ for Samyak2403**
 
 *TempBox Beta - Professional temporary email client*
