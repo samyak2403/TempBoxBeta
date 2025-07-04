@@ -6,4 +6,29 @@
     <string name="account">Account</string>
     <string name="temp_mail_title">Temporary Email Service</string>
     <string name="powered_by_mail_tm">Powered by Mail.tm</string>
+    <string name="download_attachment">Download attachment</string>
+    <string name="sender_initial">Sender initial</string>
+    <string name="unread_indicator">Unread message</string>
+    <string name="attachment">Attachment</string>
+    <string name="unknown_sender">Unknown Sender</string>
+    <string name="no_subject">(No Subject)</string>
+    
+    <!-- Account Fragment -->
+    <string name="current_account">Current Account</string>
+    <string name="email_label">Email:</string>
+    <string name="usage_label">Usage:</string>
+    <string name="created_label">Created:</string>
+    <string name="actions">Actions</string>
+    <string name="refresh_account_info">Refresh Account Info</string>
+    <string name="copy_email_address">Copy Email Address</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="no_account">No Account</string>
+    <string name="create_account_prompt">Create a temporary email account to get started</string>
+    <string name="create_account">Create Account</string>
+    
+    <!-- Inbox Fragment -->
+    <string name="your_temporary_email_is">Your temporary email is:</string>
+    <string name="your_inbox_is_empty">Your Inbox is Empty</string>
+    <string name="messages_sent_to_your_address">Messages sent to your address will appear here.</string>
 </resources>

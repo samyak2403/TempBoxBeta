@@ -168,6 +168,14 @@ public class DateUtils {
      * Get relative time string with smart formatting
      * Uses modern java.time for precise calculations
      */
+        /**
+     * Format date as a relative time string (e.g., "2h ago", "Yesterday").
+     * This is a convenience wrapper around getRelativeTimeString.
+     */
+    public static String formatRelative(String isoDate) {
+        return getRelativeTimeString(isoDate);
+    }
+
     public static String getRelativeTimeString(String isoDate) {
         ZonedDateTime dateTime = parseIsoDate(isoDate);
         if (dateTime != null) {

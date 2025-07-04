@@ -22,14 +22,15 @@ import java.util.List;
 public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.AttachmentViewHolder> {
     
     private List<Attachment> attachments;
+    private final Context context;
     
-    public AttachmentAdapter() {
-        this.attachments = new ArrayList<>();
+    public AttachmentAdapter(Context context, List<Attachment> attachments) {
+        this.context = context;
+        this.attachments = attachments;
     }
     
-    public void updateAttachments(List<Attachment> newAttachments) {
-        this.attachments.clear();
-        this.attachments.addAll(newAttachments);
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
         notifyDataSetChanged();
     }
     
@@ -123,8 +124,6 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.At
         }
         
         private void downloadAttachment(Attachment attachment) {
-            Context context = itemView.getContext();
-            
             if (attachment.getDownloadUrl() != null && !attachment.getDownloadUrl().isEmpty()) {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -138,4 +137,4 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.At
             }
         }
     }
-} 
+}

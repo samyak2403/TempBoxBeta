@@ -35,6 +35,7 @@ import retrofit2.Response;
 
 public class AccountFragment extends Fragment {
     
+    private View accountContentScroll;
     private MaterialCardView accountInfoCard;
     private TextView accountEmailText;
     private TextView accountUsageText;
@@ -70,12 +71,26 @@ public class AccountFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        try {
+            View view = inflater.inflate(R.layout.fragment_account, container, false);
+            if (view == null) {
+                android.util.Log.e("AccountFragment", "Failed to inflate fragment_account layout - view is null");
+            }
+            return view;
+        } catch (Exception e) {
+            android.util.Log.e("AccountFragment", "Error inflating fragment_account layout", e);
+            return null;
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        
+        if (view == null) {
+            android.util.Log.e("AccountFragment", "onViewCreated called with null view");
+            return;
+        }
         
         initViews(view);
         setupClickListeners();
@@ -86,11 +101,12 @@ public class AccountFragment extends Fragment {
     }
     
     private void initViews(View view) {
+        accountContentScroll = view.findViewById(R.id.account_content_scroll);
         accountInfoCard = view.findViewById(R.id.account_info_card);
         accountEmailText = view.findViewById(R.id.account_email);
         accountUsageText = view.findViewById(R.id.account_usage);
         accountCreatedText = view.findViewById(R.id.account_created);
-        refreshAccountButton = view.findViewById(R.id.refresh_account_button);
+        refreshAccountButton = view.findViewById(R.id.refresh_button);
         copyEmailButton = view.findViewById(R.id.copy_email_button);
         logoutButton = view.findViewById(R.id.logout_button);
         deleteAccountButton = view.findViewById(R.id.delete_account_button);
@@ -98,18 +114,43 @@ public class AccountFragment extends Fragment {
         noAccountState = view.findViewById(R.id.no_account_state);
         progressBar = view.findViewById(R.id.progress_bar);
         usageProgressBar = view.findViewById(R.id.usage_progress_bar);
+        
+        // Debug null views
+        if (accountContentScroll == null) android.util.Log.e("AccountFragment", "accountContentScroll not found");
+        if (accountInfoCard == null) android.util.Log.e("AccountFragment", "accountInfoCard not found");
+        if (accountEmailText == null) android.util.Log.e("AccountFragment", "accountEmailText not found");
+        if (accountUsageText == null) android.util.Log.e("AccountFragment", "accountUsageText not found");
+        if (accountCreatedText == null) android.util.Log.e("AccountFragment", "accountCreatedText not found");
+        if (refreshAccountButton == null) android.util.Log.e("AccountFragment", "refreshAccountButton not found");
+        if (copyEmailButton == null) android.util.Log.e("AccountFragment", "copyEmailButton not found");
+        if (logoutButton == null) android.util.Log.e("AccountFragment", "logoutButton not found");
+        if (deleteAccountButton == null) android.util.Log.e("AccountFragment", "deleteAccountButton not found");
+        if (goToCreateButton == null) android.util.Log.e("AccountFragment", "goToCreateButton not found");
+        if (noAccountState == null) android.util.Log.e("AccountFragment", "noAccountState not found");
+        if (progressBar == null) android.util.Log.e("AccountFragment", "progressBar not found");
+        if (usageProgressBar == null) android.util.Log.e("AccountFragment", "usageProgressBar not found");
     }
     
     private void setupClickListeners() {
-        refreshAccountButton.setOnClickListener(v -> refreshAccountInfo());
-        copyEmailButton.setOnClickListener(v -> copyEmailToClipboard());
-        logoutButton.setOnClickListener(v -> showLogoutConfirmation());
-        deleteAccountButton.setOnClickListener(v -> showDeleteConfirmation());
-        goToCreateButton.setOnClickListener(v -> {
-            if (accountActionListener != null) {
-                accountActionListener.onNavigateToCreate();
-            }
-        });
+        if (refreshAccountButton != null) {
+            refreshAccountButton.setOnClickListener(v -> refreshAccountInfo());
+        }
+        if (copyEmailButton != null) {
+            copyEmailButton.setOnClickListener(v -> copyEmailToClipboard());
+        }
+        if (logoutButton != null) {
+            logoutButton.setOnClickListener(v -> showLogoutConfirmation());
+        }
+        if (deleteAccountButton != null) {
+            deleteAccountButton.setOnClickListener(v -> showDeleteConfirmation());
+        }
+        if (goToCreateButton != null) {
+            goToCreateButton.setOnClickListener(v -> {
+                if (accountActionListener != null) {
+                    accountActionListener.onNavigateToCreate();
+                }
+            });
+        }
     }
     
     private void updateUI() {
@@ -122,27 +163,27 @@ public class AccountFragment extends Fragment {
     }
     
     private void showAccountInfo() {
-        noAccountState.setVisibility(View.GONE);
-        accountInfoCard.setVisibility(View.VISIBLE);
-        refreshAccountButton.setVisibility(View.VISIBLE);
-        copyEmailButton.setVisibility(View.VISIBLE);
-        logoutButton.setVisibility(View.VISIBLE);
-        deleteAccountButton.setVisibility(View.VISIBLE);
+        if (noAccountState != null) {
+            noAccountState.setVisibility(View.GONE);
+        }
+        if (accountContentScroll != null) {
+            accountContentScroll.setVisibility(View.VISIBLE);
+        }
         
         // Show basic info from stored data
         String email = authManager.getEmailAddress();
-        if (email != null) {
+        if (email != null && accountEmailText != null) {
             accountEmailText.setText(email);
         }
     }
     
     private void showNoAccountState() {
-        accountInfoCard.setVisibility(View.GONE);
-        refreshAccountButton.setVisibility(View.GONE);
-        copyEmailButton.setVisibility(View.GONE);
-        logoutButton.setVisibility(View.GONE);
-        deleteAccountButton.setVisibility(View.GONE);
-        noAccountState.setVisibility(View.VISIBLE);
+        if (accountContentScroll != null) {
+            accountContentScroll.setVisibility(View.GONE);
+        }
+        if (noAccountState != null) {
+            noAccountState.setVisibility(View.VISIBLE);
+        }
     }
     
     private void refreshAccountInfo() {
@@ -152,15 +193,23 @@ public class AccountFragment extends Fragment {
             return;
         }
         
-        progressBar.setVisibility(View.VISIBLE);
-        refreshAccountButton.setEnabled(false);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        if (refreshAccountButton != null) {
+            refreshAccountButton.setEnabled(false);
+        }
         
         ApiClient.getApiService().getCurrentAccount(token)
                 .enqueue(new Callback<Account>() {
                     @Override
                     public void onResponse(@NonNull Call<Account> call, @NonNull Response<Account> response) {
-                        progressBar.setVisibility(View.GONE);
-                        refreshAccountButton.setEnabled(true);
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        if (refreshAccountButton != null) {
+                            refreshAccountButton.setEnabled(true);
+                        }
                         
                         if (response.isSuccessful() && response.body() != null) {
                             currentAccount = response.body();
@@ -172,8 +221,12 @@ public class AccountFragment extends Fragment {
                     
                     @Override
                     public void onFailure(@NonNull Call<Account> call, @NonNull Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        refreshAccountButton.setEnabled(true);
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        if (refreshAccountButton != null) {
+                            refreshAccountButton.setEnabled(true);
+                        }
                         handleError(Constants.ERROR_NETWORK);
                     }
                 });
@@ -182,7 +235,9 @@ public class AccountFragment extends Fragment {
     private void updateAccountDisplay() {
         if (currentAccount == null) return;
         
-        accountEmailText.setText(currentAccount.getAddress());
+        if (accountEmailText != null) {
+            accountEmailText.setText(currentAccount.getAddress());
+        }
         
         // Smart usage display with infinity support and colors
         setUsageTextWithFormatting(currentAccount.getUsed(), currentAccount.getQuota());
@@ -191,14 +246,14 @@ public class AccountFragment extends Fragment {
         updateUsageProgressBar(currentAccount.getUsed(), currentAccount.getQuota());
         
         // Created date
-        if (currentAccount.getCreatedAt() != null) {
+        if (currentAccount.getCreatedAt() != null && accountCreatedText != null) {
             String createdText = DateUtils.formatDisplayDateTime(currentAccount.getCreatedAt());
             accountCreatedText.setText(createdText);
         }
     }
     
     private void setUsageTextWithFormatting(int used, int quota) {
-        if (getContext() == null) return;
+        if (getContext() == null || accountUsageText == null) return;
         
         // Check for unlimited/infinity account
         if (isUnlimitedAccount(quota)) {
@@ -374,15 +429,23 @@ public class AccountFragment extends Fragment {
             return;
         }
         
-        progressBar.setVisibility(View.VISIBLE);
-        deleteAccountButton.setEnabled(false);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        if (deleteAccountButton != null) {
+            deleteAccountButton.setEnabled(false);
+        }
         
         ApiClient.getApiService().deleteAccount(token, accountId)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                        progressBar.setVisibility(View.GONE);
-                        deleteAccountButton.setEnabled(true);
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        if (deleteAccountButton != null) {
+                            deleteAccountButton.setEnabled(true);
+                        }
                         
                         if (response.isSuccessful()) {
                             authManager.clear();
@@ -401,8 +464,12 @@ public class AccountFragment extends Fragment {
                     
                     @Override
                     public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        deleteAccountButton.setEnabled(true);
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        if (deleteAccountButton != null) {
+                            deleteAccountButton.setEnabled(true);
+                        }
                         handleError(Constants.ERROR_NETWORK);
                     }
                 });

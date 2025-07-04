@@ -5,13 +5,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.samyak.tempboxbeta.R;
 import com.samyak.tempboxbeta.models.Message;
 import com.samyak.tempboxbeta.utils.DateUtils;
@@ -106,22 +106,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     
     // ViewHolder with optimized binding
     class MessageViewHolder extends RecyclerView.ViewHolder {
-        
-        private TextView senderText;
-        private TextView subjectText;
-        private TextView timeText;
-        private View unreadIndicator;
-        private ImageView attachmentIndicator;
-        
+
+        private final TextView senderInitial;
+        private final TextView senderName;
+        private final TextView subjectText;
+        private final TextView timeText;
+        private final View unreadIndicator;
+        private final Chip attachmentChip;
+
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            
-            senderText = itemView.findViewById(R.id.sender_name);
+
+            senderInitial = itemView.findViewById(R.id.sender_initial);
+            senderName = itemView.findViewById(R.id.sender_name);
             subjectText = itemView.findViewById(R.id.subject_text);
             timeText = itemView.findViewById(R.id.time_text);
             unreadIndicator = itemView.findViewById(R.id.unread_indicator);
-            attachmentIndicator = itemView.findViewById(R.id.attachment_indicator);
-            
+            attachmentChip = itemView.findViewById(R.id.attachment_chip);
+
             // Set click listener once
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
@@ -130,40 +132,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 }
             });
         }
-        
+
         public void bind(Message message) {
-            // Optimized binding with null checks
-            String senderName = message.getFrom() != null && message.getFrom().getName() != null 
-                ? message.getFrom().getName() 
-                : "Unknown Sender";
-            senderText.setText(senderName);
-            
-            String subject = !TextUtils.isEmpty(message.getSubject()) 
-                ? message.getSubject() 
-                : "No Subject";
-            subjectText.setText(subject);
-            
-            // Smart time formatting with modern patterns
-            timeText.setText(DateUtils.formatSmartDate(message.getCreatedAt()));
-            
-            // Update read/unread state with visual feedback
-            if (message.isSeen()) {
-                unreadIndicator.setVisibility(View.GONE);
-                itemView.setAlpha(0.7f);
-                senderText.setTextAppearance(android.R.style.TextAppearance_Small);
-                subjectText.setTextAppearance(android.R.style.TextAppearance_Small);
+            // Set sender info
+            if (message.getFrom() != null && message.getFrom().getName() != null && !message.getFrom().getName().isEmpty()) {
+                senderName.setText(message.getFrom().getName());
+                senderInitial.setText(String.valueOf(message.getFrom().getName().charAt(0)));
             } else {
-                unreadIndicator.setVisibility(View.VISIBLE);
-                itemView.setAlpha(1.0f);
-                senderText.setTextAppearance(android.R.style.TextAppearance_Medium);
-                subjectText.setTextAppearance(android.R.style.TextAppearance_Medium);
+                senderName.setText(R.string.unknown_sender);
+                senderInitial.setText("?");
             }
-            
-            // Show/hide attachment indicator if available
-            if (attachmentIndicator != null) {
-                attachmentIndicator.setVisibility(
-                    message.isHasAttachments() ? View.VISIBLE : View.GONE);
-            }
+
+            // Set subject
+            subjectText.setText(!TextUtils.isEmpty(message.getSubject()) ? message.getSubject() : context.getString(R.string.no_subject));
+
+            // Set date
+            timeText.setText(DateUtils.formatRelative(message.getCreatedAt()));
+
+            // Set read/unread state
+            unreadIndicator.setVisibility(message.isSeen() ? View.GONE : View.VISIBLE);
+            senderName.setTypeface(null, message.isSeen() ? android.graphics.Typeface.NORMAL : android.graphics.Typeface.BOLD);
+            subjectText.setTypeface(null, message.isSeen() ? android.graphics.Typeface.NORMAL : android.graphics.Typeface.BOLD);
+
+            // Set attachment indicator
+            attachmentChip.setVisibility(message.hasAttachments() ? View.VISIBLE : View.GONE);
         }
     }
     
@@ -202,8 +194,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             
             // Compare key fields that affect display
             return oldMessage.isSeen() == newMessage.isSeen() &&
-                   TextUtils.equals(oldMessage.getSubject(), newMessage.getSubject()) &&
-                   TextUtils.equals(oldMessage.getCreatedAt(), newMessage.getCreatedAt());
+                    oldMessage.hasAttachments() == newMessage.hasAttachments() &&
+                    TextUtils.equals(oldMessage.getSubject(), newMessage.getSubject()) &&
+                    TextUtils.equals(oldMessage.getCreatedAt(), newMessage.getCreatedAt());
         }
     }
 } 

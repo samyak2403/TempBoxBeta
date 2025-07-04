@@ -70,12 +70,26 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inbox, container, false);
+        try {
+            View view = inflater.inflate(R.layout.fragment_inbox, container, false);
+            if (view == null) {
+                Log.e(TAG, "Failed to inflate fragment_inbox layout - view is null");
+            }
+            return view;
+        } catch (Exception e) {
+            Log.e(TAG, "Error inflating fragment_inbox layout", e);
+            return null;
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        
+        if (view == null) {
+            Log.e(TAG, "onViewCreated called with null view");
+            return;
+        }
         
         initViews(view);
         setupRecyclerView();
@@ -115,9 +129,34 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
         progressBar = view.findViewById(R.id.progress_bar);
         emailAddressText = view.findViewById(R.id.email_address_text);
         emailInfoLayout = view.findViewById(R.id.email_info_layout);
+        
+        // Debug null views
+        if (swipeRefresh == null) {
+            Log.e(TAG, "SwipeRefreshLayout not found in layout");
+        }
+        if (recyclerView == null) {
+            Log.e(TAG, "RecyclerView not found in layout");
+        }
+        if (emptyState == null) {
+            Log.e(TAG, "Empty state view not found in layout");
+        }
+        if (progressBar == null) {
+            Log.e(TAG, "Progress bar not found in layout");
+        }
+        if (emailAddressText == null) {
+            Log.e(TAG, "Email address text not found in layout");
+        }
+        if (emailInfoLayout == null) {
+            Log.e(TAG, "Email info layout not found in layout");
+        }
     }
     
     private void setupRecyclerView() {
+        if (recyclerView == null) {
+            Log.e(TAG, "Cannot setup RecyclerView - view is null");
+            return;
+        }
+        
         messageAdapter = new MessageAdapter(getContext());
         messageAdapter.setOnMessageClickListener(this);
         
@@ -136,11 +175,18 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
     }
     
     private void setupSwipeRefresh() {
+        if (swipeRefresh == null) {
+            Log.e(TAG, "Cannot setup SwipeRefresh - view is null");
+            return;
+        }
+        
         swipeRefresh.setOnRefreshListener(() -> {
             if (authManager.isLoggedIn()) {
                 loadMessages(true); // Force refresh
             } else {
-                swipeRefresh.setRefreshing(false);
+                if (swipeRefresh != null) {
+                    swipeRefresh.setRefreshing(false);
+                }
             }
         });
         
@@ -211,7 +257,7 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
         
         // Show loading only for manual refresh or first load
         if (forceRefresh || cachedMessages.isEmpty()) {
-            if (!swipeRefresh.isRefreshing()) {
+            if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
                 progressBar.setVisibility(View.VISIBLE);
             }
         }
@@ -225,7 +271,9 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
                                          @NonNull Response<ApiResponse<Message>> response) {
                         isLoading = false;
                         progressBar.setVisibility(View.GONE);
-                        swipeRefresh.setRefreshing(false);
+                        if (swipeRefresh != null) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                         
                         if (response.isSuccessful() && response.body() != null) {
                             List<Message> messages = response.body().getMembers();
@@ -252,7 +300,9 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
                     public void onFailure(@NonNull Call<ApiResponse<Message>> call, @NonNull Throwable t) {
                         isLoading = false;
                         progressBar.setVisibility(View.GONE);
-                        swipeRefresh.setRefreshing(false);
+                        if (swipeRefresh != null) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                         
                         if (forceRefresh) {
                             handleError(Constants.ERROR_NETWORK);

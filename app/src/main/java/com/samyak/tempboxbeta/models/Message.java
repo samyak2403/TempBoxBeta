@@ -116,7 +116,7 @@ public class Message {
     public String getRetentionDate() { return retentionDate; }
     public void setRetentionDate(String retentionDate) { this.retentionDate = retentionDate; }
 
-    public boolean isHasAttachments() { return hasAttachments; }
+    public boolean hasAttachments() { return hasAttachments; }
     public void setHasAttachments(boolean hasAttachments) { this.hasAttachments = hasAttachments; }
 
     public List<Attachment> getAttachments() { return attachments; }

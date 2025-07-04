@@ -1,306 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gmail_background">
+    android:background="?attr/colorSurface">
 
-    <!-- Gmail-style Toolbar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        style="@style/Widget.TempBoxBeta.Toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIconTint="@color/gmail_text_primary"
-        app:titleTextColor="@color/gmail_text_primary" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:elevation="0dp">
 
-    <!-- SwipeRefresh Container -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/message_detail_menu"
+
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Message Details" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.core.widget.NestedScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Header Info -->
+            <LinearLayout
+                android:id="@+id/header_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp">
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="invisible"
+                tools:visibility="visible">
 
-                <!-- Gmail-style Message Header Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/header_card"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/subject_text"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
-                    app:cardBackgroundColor="@color/gmail_card_background"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="1dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/gmail_outline"
-                    app:strokeWidth="0.5dp">
+                    android:layout_marginBottom="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    tools:text="Important Message Subject" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/sender_avatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_account_circle"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="16dp">
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <!-- Subject Text -->
                         <TextView
-                            android:id="@+id/subject_text"
-                            style="@style/TextAppearance.TempBoxBeta.Headline"
-                            android:layout_width="0dp"
+                            android:id="@+id/sender_name"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="12dp"
-                            android:fontFamily="sans-serif"
-                            android:textSize="20sp"
-                            android:textStyle="normal"
-                            app:layout_constraintEnd_toStartOf="@id/action_button"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Important Message Subject" />
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            tools:text="John Doe" />
 
-                        <!-- Action Button (Reply/More) -->
-                        <ImageView
-                            android:id="@+id/action_button"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_refresh"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/gmail_text_secondary" />
-
-                        <!-- Sender Info Section -->
-                        <LinearLayout
-                            android:id="@+id/sender_section"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/sender_email"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:orientation="horizontal"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/subject_text">
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="john.doe@example.com" />
+                    </LinearLayout>
 
-                            <!-- From Label -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:text="From: "
-                                android:textColor="@color/gmail_text_secondary"
-                                android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        tools:text="Dec 25, 2024" />
+                </LinearLayout>
 
-                            <!-- Sender Text -->
-                            <TextView
-                                android:id="@+id/sender_text"
-                                style="@style/TextAppearance.TempBoxBeta.Body"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="14sp"
-                                tools:text="john.doe@example.com" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
 
-                        </LinearLayout>
+            </LinearLayout>
 
-                        <!-- Date Section -->
-                        <LinearLayout
-                            android:id="@+id/date_section"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:orientation="horizontal"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/sender_section">
+            <!-- WebView Container -->
+            <FrameLayout
+                android:id="@+id/webview_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header_content"
+                android:visibility="invisible"
+                tools:visibility="visible">
 
-                            <!-- Date Label -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:text="Date: "
-                                android:textColor="@color/gmail_text_secondary"
-                                android:textSize="14sp" />
+                <WebView
+                    android:id="@+id/content_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-                            <!-- Date Text -->
-                            <TextView
-                                android:id="@+id/date_text"
-                                style="@style/TextAppearance.TempBoxBeta.Body"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="14sp"
-                                tools:text="Dec 25, 2024 at 2:30 PM" />
-
-                        </LinearLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Gmail-style Proportional WebView Container -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/webview_card"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:minHeight="400dp"
-                    app:cardBackgroundColor="@color/gmail_background"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="1dp"
-                    app:layout_constraintBottom_toTopOf="@id/attachments_barrier"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/header_card"
-                    app:layout_constraintVertical_bias="0"
-                    app:strokeColor="@color/gmail_outline"
-                    app:strokeWidth="0.5dp">
-
-                    <!-- Gmail-style Proportional WebView -->
-                    <WebView
-                        android:id="@+id/content_webview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="12dp"
-                        android:background="@color/gmail_background"
-                        android:scrollbars="vertical" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Attachments Barrier (for proper proportions) -->
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/attachments_barrier"
+                <ProgressBar
+                    android:id="@+id/webview_progress_bar"
+                    style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:barrierDirection="top"
-                    app:constraint_referenced_ids="attachments_label,attachments_recycler_view" />
-
-                <!-- Gmail-style Attachments Section -->
-                <TextView
-                    android:id="@+id/attachments_label"
-                    style="@style/TextAppearance.TempBoxBeta.Body"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:drawablePadding="8dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center_vertical"
-                    android:text="Attachments"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    android:layout_gravity="center"
                     android:visibility="gone"
-                    app:drawableStartCompat="@drawable/ic_attachment"
-                    app:drawableTint="@color/gmail_text_secondary"
-                    app:layout_constraintBottom_toTopOf="@id/attachments_recycler_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     tools:visibility="visible" />
+            </FrameLayout>
+
+            <!-- Attachments Section -->
+            <LinearLayout
+                android:id="@+id/attachments_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="?attr/colorSurface"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Attachments"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/attachments_recycler_view"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="20dp"
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="2"
-                    tools:listitem="@layout/item_attachment"
-                    tools:visibility="visible" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
+                    tools:listitem="@layout/item_attachment" />
+            </LinearLayout>
+        </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- Gmail-style Error State -->
+    <!-- Error State -->
     <LinearLayout
         android:id="@+id/error_state"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/gmail_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="40dp"
+        android:padding="32dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        tools:visibility="gone">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="24dp"
-            android:alpha="0.6"
-            android:src="@drawable/ic_refresh"
-            app:tint="@color/gmail_text_hint" />
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_error"
+            app:tint="?attr/colorError" />
 
         <TextView
             android:id="@+id/error_title"
-            style="@style/TextAppearance.TempBoxBeta.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Connection Error"
-            android:textSize="20sp" />
+            android:text="Failed to Load Message"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall" />
 
         <TextView
             android:id="@+id/error_message"
-            style="@style/TextAppearance.TempBoxBeta.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
             android:gravity="center"
-            android:text="Failed to load message"
-            android:textSize="14sp" />
+            android:text="Please check your connection and try again."
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/retry_button"
-            style="@style/Widget.TempBoxBeta.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Try again"
-            app:icon="@drawable/ic_refresh"
-            app:iconSize="18dp" />
+            android:layout_marginTop="24dp"
+            android:text="Retry"
+            app:icon="@drawable/ic_refresh" />
 
     </LinearLayout>
 
-    <!-- Gmail-style Loading Progress -->
+    <!-- Loading Indicator -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/gmail_blue"
+        android:layout_gravity="center"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        tools:visibility="visible" />
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

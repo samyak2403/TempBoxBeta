@@ -2,138 +2,116 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.TempBoxBeta.CardView"
+    style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="2dp"
-    app:cardElevation="1dp"
-    app:cardCornerRadius="8dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:rippleColor="@color/gmail_selected_background"
-    app:cardPreventCornerOverlap="true"
-    android:stateListAnimator="@null">
+    android:foreground="?attr/selectableItemBackground">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/gmail_card_background">
+        android:padding="16dp">
 
-        <!-- Header with sender and time -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Sender Initial -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sender_initial"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/sender_initial_background"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="J" />
+
+        <!-- Unread Indicator -->
+        <View
+            android:id="@+id/unread_indicator"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_unread"
+            android:visibility="gone"
+            app:layout_constraintCircle="@+id/sender_initial"
+            app:layout_constraintCircleRadius="20dp"
+            app:layout_constraintCircleAngle="135"
+            tools:visibility="visible" />
+
+        <!-- Sender Name -->
+        <TextView
+            android:id="@+id/sender_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintStart_toEndOf="@+id/sender_initial"
+            app:layout_constraintTop_toTopOf="@+id/sender_initial"
+            app:layout_constraintEnd_toStartOf="@+id/time_text"
+            android:layout_marginEnd="8dp"
+            tools:text="John Doe" />
 
-            <!-- Sender info -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/sender_name"
-                    style="@style/TextAppearance.TempBoxBeta.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="John Doe" />
-
-                <TextView
-                    android:id="@+id/sender_email"
-                    style="@style/TextAppearance.TempBoxBeta.Caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    tools:text="john.doe@example.com" />
-
-            </LinearLayout>
-
-            <!-- Status indicators and time -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="end">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!-- Unread indicator -->
-                    <View
-                        android:id="@+id/unread_indicator"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/circle_unread"
-                        android:visibility="gone"
-                        android:elevation="2dp" />
-
-                    <!-- Attachment indicator -->
-                    <ImageView
-                        android:id="@+id/attachment_indicator"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_attachment"
-                        android:visibility="gone"
-                        app:tint="@color/gmail_text_secondary" />
-
-                    <TextView
-                        android:id="@+id/time_text"
-                        style="@style/TextAppearance.TempBoxBeta.Caption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="11sp"
-                        tools:text="2h ago" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <!-- Time -->
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceLabelSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sender_name"
+            app:layout_constraintBottom_toBottomOf="@+id/sender_name"
+            tools:text="2h ago" />
 
         <!-- Subject -->
         <TextView
             android:id="@+id/subject_text"
-            style="@style/TextAppearance.TempBoxBeta.Body"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:fontFamily="sans-serif"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintStart_toStartOf="@+id/sender_name"
+            app:layout_constraintTop_toBottomOf="@+id/sender_name"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Welcome to our service" />
 
-        <!-- Preview text -->
+        <!-- Preview Text -->
         <TextView
             android:id="@+id/preview_text"
-            style="@style/TextAppearance.TempBoxBeta.Caption"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:lineSpacingExtra="1dp"
+            android:lineSpacingExtra="2dp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintStart_toStartOf="@+id/subject_text"
+            app:layout_constraintTop_toBottomOf="@+id/subject_text"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Thank you for signing up! Here's what you need to know to get started..." />
 
-    </LinearLayout>
+        <!-- Attachment Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/attachment_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Attachment"
+            android:visibility="gone"
+            app:chipIcon="@drawable/ic_attachment"
+            app:chipIconSize="16dp"
+            app:chipMinHeight="24dp"
+            style="@style/Widget.Material3.Chip.Assist"
+            app:layout_constraintStart_toStartOf="@+id/preview_text"
+            app:layout_constraintTop_toBottomOf="@+id/preview_text"
+            tools:visibility="visible"/>
 
-</com.google.android.material.card.MaterialCardView> 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
