@@ -26,13 +26,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="?attr/colorPrimaryContainer">
+            android:background="?attr/colorPrimaryContainer"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
 
             <TextView
                 android:id="@+id/current_email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your temporary email is:"
+                android:text="@string/your_temporary_email_is"
                 android:textAppearance="?attr/textAppearanceLabelMedium"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:alpha="0.7" />
@@ -46,6 +49,19 @@
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:textStyle="bold"
                 tools:text="example-address@tempbox.com" />
+            
+            <TextView
+                android:id="@+id/copy_hint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/copy_email_to_use"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:alpha="0.6"
+                android:drawableStart="@drawable/ic_copy"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

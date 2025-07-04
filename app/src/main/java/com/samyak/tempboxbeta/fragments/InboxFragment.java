@@ -1,5 +1,6 @@
 package com.samyak.tempboxbeta.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -218,6 +219,20 @@ public class InboxFragment extends Fragment implements MessageAdapter.OnMessageC
         if (email != null) {
             emailAddressText.setText(email);
             emailInfoLayout.setVisibility(View.VISIBLE);
+            
+            // Make email card clickable to copy email
+            emailInfoLayout.setOnClickListener(v -> copyEmailToClipboard(email));
+        }
+    }
+    
+    private void copyEmailToClipboard(String email) {
+        if (getContext() != null) {
+            android.content.ClipboardManager clipboard = 
+                (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Email Address", email);
+            clipboard.setPrimaryClip(clip);
+            
+            Toast.makeText(getContext(), "Email copied to clipboard", Toast.LENGTH_SHORT).show();
         }
     }
     

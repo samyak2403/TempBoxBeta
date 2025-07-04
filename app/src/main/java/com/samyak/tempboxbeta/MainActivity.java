@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.samyak.tempboxbeta.fragments.AccountFragment;
 import com.samyak.tempboxbeta.fragments.CreateAccountFragment;
 import com.samyak.tempboxbeta.utils.AuthManager;
+import com.samyak.tempboxbeta.utils.AutoEmailGenerator;
 import com.samyak.tempboxbeta.utils.PreloadManager;
 
 public class MainActivity extends AppCompatActivity implements 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     private AuthManager authManager;
     private PreloadManager preloadManager;
+    private AutoEmailGenerator autoEmailGenerator;
     private boolean navigationSetup = false;
 
     @Override
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements
         
         authManager = AuthManager.getInstance(this);
         preloadManager = PreloadManager.getInstance(this);
+        autoEmailGenerator = new AutoEmailGenerator(this);
         
         // Start background preloading for super fast data loading
         if (authManager.isLoggedIn()) {
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements
         }
         
         initViews();
+        
+        // Check if we need to auto-generate an email
+        checkAndGenerateAutoEmail();
         
         // Setup modern back press handling
         getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
@@ -252,6 +258,61 @@ public class MainActivity extends AppCompatActivity implements
             } catch (Exception e) {
                 // Handle navigation error gracefully
             }
+        }
+    }
+    
+    private void checkAndGenerateAutoEmail() {
+        // Only generate auto email if:
+        // 1. User is not already logged in
+        // 2. Auto email hasn't been generated before
+        if (!authManager.isLoggedIn() && !authManager.hasAutoEmailGenerated()) {
+            android.util.Log.d("MainActivity", "Generating automatic temporary email...");
+            
+            autoEmailGenerator.generateAutoEmail(new AutoEmailGenerator.AutoEmailCallback() {
+                @Override
+                public void onSuccess(String emailAddress) {
+                    android.util.Log.d("MainActivity", "Auto email generated: " + emailAddress);
+                    
+                    // Mark auto email as generated
+                    authManager.setAutoEmailGenerated(true);
+                    
+                    // Navigate to inbox to show the new email
+                    runOnUiThread(() -> {
+                        if (navController != null) {
+                            try {
+                                navController.navigate(R.id.inboxFragment);
+                            } catch (Exception e) {
+                                // Handle navigation error gracefully
+                            }
+                        }
+                        
+                        // Show a toast to inform the user
+                        android.widget.Toast.makeText(MainActivity.this, 
+                            "Welcome! Your temporary email is ready: " + emailAddress, 
+                            android.widget.Toast.LENGTH_LONG).show();
+                    });
+                }
+                
+                @Override
+                public void onError(String errorMessage) {
+                    android.util.Log.e("MainActivity", "Failed to generate auto email: " + errorMessage);
+                    
+                    runOnUiThread(() -> {
+                        // If auto generation fails, show the create account screen
+                        if (navController != null) {
+                            try {
+                                navController.navigate(R.id.createAccountFragment);
+                            } catch (Exception e) {
+                                // Handle navigation error gracefully
+                            }
+                        }
+                        
+                        android.widget.Toast.makeText(MainActivity.this, 
+                            "Please create your temporary email manually", 
+                            android.widget.Toast.LENGTH_SHORT).show();
+                    });
+                }
+            });
         }
     }
 }

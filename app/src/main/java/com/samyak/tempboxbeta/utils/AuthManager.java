@@ -12,6 +12,7 @@ public class AuthManager {
     private static final String KEY_ACCOUNT_ID = "account_id";
     private static final String KEY_EMAIL_ADDRESS = "email_address";
     private static final String KEY_IS_LOGGED_IN = "is_logged_in";
+    private static final String KEY_AUTO_EMAIL_GENERATED = "auto_email_generated";
     
     private final SharedPreferences preferences;
     private static AuthManager instance;
@@ -75,5 +76,15 @@ public class AuthManager {
     
     public void clear() {
         preferences.edit().clear().apply();
+    }
+    
+    public boolean hasAutoEmailGenerated() {
+        return preferences.getBoolean(KEY_AUTO_EMAIL_GENERATED, false);
+    }
+    
+    public void setAutoEmailGenerated(boolean generated) {
+        preferences.edit()
+                .putBoolean(KEY_AUTO_EMAIL_GENERATED, generated)
+                .apply();
     }
 } 

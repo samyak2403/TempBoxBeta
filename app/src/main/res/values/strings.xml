@@ -31,4 +31,9 @@
     <string name="your_temporary_email_is">Your temporary email is:</string>
     <string name="your_inbox_is_empty">Your Inbox is Empty</string>
     <string name="messages_sent_to_your_address">Messages sent to your address will appear here.</string>
+    
+    <!-- Auto Email Generation -->
+    <string name="welcome_auto_email_generated">Welcome! Your temporary email is ready to use</string>
+    <string name="auto_email_subtitle">Use this email to create accounts on websites and services. All messages will appear here.</string>
+    <string name="copy_email_to_use">Tap to copy your email address</string>
 </resources>
