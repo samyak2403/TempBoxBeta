@@ -1,0 +1,7 @@
+# Appfile for TempBox Beta
+
+# The package name of the application
+package_name("com.samyak.tempboxbeta")
+
+# F-Droid configuration
+# F-Droid will handle the build and deployment process 
