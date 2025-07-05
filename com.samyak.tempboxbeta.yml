@@ -51,4 +51,4 @@ Builds:
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: '1.0'
-CurrentVersionCode: 1 
+CurrentVersionCode: 1
