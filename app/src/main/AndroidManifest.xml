@@ -35,6 +35,18 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TempBoxBeta.NoActionBar" />
             
+        <activity
+            android:name=".activities.FaqActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TempBoxBeta.NoActionBar" />
+            
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TempBoxBeta.NoActionBar" />
+            
     </application>
 
 </manifest>

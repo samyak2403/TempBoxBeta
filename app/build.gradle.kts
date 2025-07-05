@@ -39,6 +39,16 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("androidx.core:core:1.13.0")
+        force("androidx.appcompat:appcompat:1.7.0")
+        
+        // Exclude all support library dependencies in favor of AndroidX
+        exclude(group = "com.android.support")
+    }
+}
+
 dependencies {
     implementation(libs.appcompat)
     implementation("com.google.android.material:material:1.12.0")
@@ -60,6 +70,17 @@ dependencies {
     
     // Core library desugaring for java.time support on API level < 26
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // Sliding Button - SlideToAct (Modern AndroidX compatible)
+    implementation("com.ncorti:slidetoact:0.11.0") {
+        exclude(group = "com.android.support", module = "support-compat")
+        exclude(group = "com.android.support", module = "support-core-utils")
+        exclude(group = "com.android.support", module = "support-annotations")
+    }
+    
+    // Force AndroidX versions to avoid conflicts
+    implementation("androidx.core:core:1.13.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -194,15 +194,56 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLogout() {
-        // User logged out, navigate to create account
-        if (navController != null) {
-            try {
-                navController.navigate(R.id.createAccountFragment);
-            } catch (Exception e) {
-                // Handle navigation error gracefully
+        // User logged out, automatically generate new temporary email and login
+        android.util.Log.d("MainActivity", "User logged out, generating new automatic temporary email...");
+        
+        // Generate new auto email after logout
+        autoEmailGenerator.generateAutoEmail(new AutoEmailGenerator.AutoEmailCallback() {
+            @Override
+            public void onSuccess(String emailAddress) {
+                android.util.Log.d("MainActivity", "New auto email generated after logout: " + emailAddress);
+                
+                runOnUiThread(() -> {
+                    // Navigate to account fragment to show the new email
+                    if (navController != null) {
+                        try {
+                            navController.navigate(R.id.accountFragment);
+                        } catch (Exception e) {
+                            // Handle navigation error gracefully
+                        }
+                    }
+                    
+                    refreshAllFragments();
+                    
+                    // Show a toast to inform the user
+                    android.widget.Toast.makeText(MainActivity.this, 
+                        "New temporary email generated: " + emailAddress, 
+                        android.widget.Toast.LENGTH_LONG).show();
+                });
             }
-        }
-        refreshAllFragments();
+            
+            @Override
+            public void onError(String errorMessage) {
+                android.util.Log.e("MainActivity", "Failed to generate new auto email after logout: " + errorMessage);
+                
+                runOnUiThread(() -> {
+                    // If auto generation fails, show the create account screen
+                    if (navController != null) {
+                        try {
+                            navController.navigate(R.id.createAccountFragment);
+                        } catch (Exception e) {
+                            // Handle navigation error gracefully
+                        }
+                    }
+                    
+                    refreshAllFragments();
+                    
+                    android.widget.Toast.makeText(MainActivity.this, 
+                        "Please create your temporary email manually", 
+                        android.widget.Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
     @Override
@@ -216,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
     }
-    
+
     private void refreshAllFragments() {
         // This method refreshes all fragments by clearing the fragment manager
         // The navigation component will recreate them as needed

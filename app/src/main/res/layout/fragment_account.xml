@@ -81,10 +81,89 @@
                                 android:id="@+id/account_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:textColor="?attr/colorOnSurface"
-                                android:layout_marginTop="4dp"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="8dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
                                 tools:text="user@example.com" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Password -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_password"
+                            android:layout_marginEnd="16dp"
+                            app:tint="?attr/colorPrimary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/password_label"
+                                android:textAppearance="?attr/textAppearanceLabelMedium"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/account_password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="80dp"
+                                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                                    android:textColor="?attr/colorOnSurface"
+                                    tools:text="••••••••" />
+
+                                <ImageButton
+                                    android:id="@+id/copy_password_inline_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:contentDescription="@string/copy_password"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_copy"
+                                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                                <ImageButton
+                                    android:id="@+id/toggle_password_visibility"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@id/copy_password_inline_button"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:contentDescription="@string/toggle_password_visibility"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_visibility_off"
+                                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
                     </LinearLayout>
@@ -210,6 +289,44 @@
                         app:icon="@drawable/ic_copy"
                         app:iconGravity="start" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/colorOutlineVariant"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/faq_button"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/faq"
+                        android:textAlignment="textStart"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:icon="@drawable/ic_info"
+                        app:iconGravity="start" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/colorOutlineVariant"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_button_actions"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/switch_account"
+                        android:textAlignment="textStart"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:icon="@drawable/ic_account"
+                        app:iconGravity="start" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -314,13 +431,28 @@
             app:layout_constraintWidth_percent="0.8" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textSize="16sp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="16dp"
+            app:icon="@drawable/ic_account"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/go_to_create_button"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_account"
             android:textSize="16sp"
             android:paddingHorizontal="32dp"
-            android:paddingVertical="12dp" />
+            android:paddingVertical="12dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 

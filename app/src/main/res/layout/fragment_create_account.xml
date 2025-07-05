@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-    tools:context=".ui.create_account.CreateAccountFragment">
+   >
 
     <!-- Form Content -->
     <ScrollView
@@ -53,6 +53,97 @@
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginBottom="24dp"/>
 
+            <!-- Quick Generate Section (Mail.tm Style) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/quick_generate_card"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="?attr/colorSurfaceContainerHigh">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚡ Quick Create"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textColor="?attr/colorOnSurface"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Slide to instantly get a new email address."
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp"/>
+
+                    <com.ncorti.slidetoact.SlideToActView
+                        android:id="@+id/quick_generate_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:contentDescription="Slide to generate a quick email address"
+                        app:text="🚀 Slide to Create"
+                        app:slider_icon="@drawable/right_arrow"
+                        app:slider_icon_color="@color/black"
+
+                        app:outer_color="?attr/colorPrimary"
+                        app:inner_color="?attr/colorSurface"
+                        app:border_radius="16dp"
+                        app:animation_duration="300"
+                        app:slider_height="60dp"
+                        app:text_size="16sp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- OR Divider -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?attr/colorOutlineVariant"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OR"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?attr/colorOutlineVariant"/>
+
+            </LinearLayout>
+
+            <!-- Manual Creation Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎯 Custom Email Creation"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
             <!-- Domain selection -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/domain_input_layout"
@@ -70,14 +161,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Username input -->
+            <!-- Username input with auto-generate -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_input_layout"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Username (optional)">
+                android:layout_marginBottom="8dp"
+                android:hint="Username (optional)"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_autorenew">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username_edit_text"
@@ -87,13 +180,23 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Password input -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/generate_username_button"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Generate Random Username"
+                android:layout_marginBottom="16dp"
+                app:icon="@drawable/ic_autorenew"
+                app:iconGravity="textStart"/>
+
+            <!-- Password input with auto-generate -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_input_layout"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="8dp"
                 android:hint="Password"
                 app:endIconMode="password_toggle">
 
@@ -105,6 +208,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/generate_password_button"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Generate Secure Password"
+                android:layout_marginBottom="24dp"
+                app:icon="@drawable/ic_password"
+                app:iconGravity="textStart"/>
+
             <!-- Create button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/create_button"
@@ -112,7 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="12dp"
-                android:text="Create Account"
+                android:text="Create Custom Account"
                 android:layout_marginBottom="24dp"/>
 
             <!-- Instructions -->
@@ -140,7 +253,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Usernames and passwords are used to recover your temporary account on other devices."
+                        android:text="🔒 Secure • 🚀 Fast • 🎭 Anonymous • 📧 Instant Access\n\nNo captchas, no registrations - just instant temporary email!"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         android:lineSpacingExtra="2dp" />

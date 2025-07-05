@@ -16,16 +16,24 @@
     <!-- Account Fragment -->
     <string name="current_account">Current Account</string>
     <string name="email_label">Email:</string>
+    <string name="password_label">Password:</string>
     <string name="usage_label">Usage:</string>
     <string name="created_label">Created:</string>
     <string name="actions">Actions</string>
     <string name="refresh_account_info">Refresh Account Info</string>
     <string name="copy_email_address">Copy Email Address</string>
+    <string name="copy_password">Copy Password</string>
+    <string name="email_copied">Email copied to clipboard</string>
+    <string name="password_copied">Password copied to clipboard</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="faq">FAQ</string>
+    <string name="switch_account">Switch Account</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete Account</string>
     <string name="no_account">No Account</string>
     <string name="create_account_prompt">Create a temporary email account to get started</string>
     <string name="create_account">Create Account</string>
+    <string name="generate_random">Generate Random</string>
     
     <!-- Inbox Fragment -->
     <string name="your_temporary_email_is">Your temporary email is:</string>
@@ -36,4 +44,29 @@
     <string name="welcome_auto_email_generated">Welcome! Your temporary email is ready to use</string>
     <string name="auto_email_subtitle">Use this email to create accounts on websites and services. All messages will appear here.</string>
     <string name="copy_email_to_use">Tap to copy your email address</string>
+    
+    <!-- Login Fragment -->
+    <string name="login">Login</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="sign_in_to_account">Sign in to your temporary email account</string>
+    <string name="email_address">Your temporary email address</string>
+    <string name="password">Password</string>
+    <string name="enter_email_address">Enter your Mail.tm email address</string>
+    <string name="enter_password">Your secure account password</string>
+    <string name="dont_have_account">Need a new temp email? Go to Main</string>
+    <string name="logging_in">Accessing your temp mail...</string>
+    <string name="login_successful">Welcome back to Mail.tm! Your temp mail is ready.</string>
+    <string name="invalid_credentials">Invalid email or password. Please check your Mail.tm credentials.</string>
+    <string name="account_not_found">Mail.tm account not found. Please check your email address.</string>
+    <string name="login_failed">Failed to access your temp mail. Please try again later.</string>
+    <string name="currently_logged_in">Currently logged in as:</string>
+    <string name="switch_account_info">This will log you out and allow you to login with different credentials</string>
+    
+    <!-- Mail.tm Branding -->
+    <string name="mail_tm_title">Mail.tm</string>
+    <string name="temp_mail_subtitle">Temp Mail</string>
+    <string name="mail_tm_tagline">Free temporary disposable anonymous email service</string>
+    <string name="mail_tm_features">No commitments, no risks—just secure, instant access</string>
+    <string name="access_temp_mail">Access My Temp Mail</string>
+    <string name="powered_by_mailtm">Powered by Mail.tm</string>
 </resources>

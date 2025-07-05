@@ -46,7 +46,7 @@ public class AutoEmailGenerator {
                     @Override
                     public void onResponse(Call<ApiResponse<Domain>> call, Response<ApiResponse<Domain>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            List<Domain> domains = response.body().getData();
+                            List<Domain> domains = response.body().getMembers();
                             if (domains != null && !domains.isEmpty()) {
                                 // Find first active, non-private domain
                                 Domain selectedDomain = null;
@@ -125,6 +125,7 @@ public class AutoEmailGenerator {
                             AuthToken authToken = response.body();
                             
                             // Save authentication data
+                            account.setPassword(password); // Make sure password is set before saving
                             authManager.saveAuthToken(authToken);
                             authManager.saveAccount(account);
                             

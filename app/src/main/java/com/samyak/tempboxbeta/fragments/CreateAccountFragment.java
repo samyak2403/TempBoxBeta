@@ -19,6 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samyak.tempboxbeta.R;
+import com.ncorti.slidetoact.SlideToActView;
 import com.samyak.tempboxbeta.adapters.DomainAdapter;
 import com.samyak.tempboxbeta.models.Account;
 import com.samyak.tempboxbeta.models.ApiResponse;
@@ -27,6 +28,7 @@ import com.samyak.tempboxbeta.models.Domain;
 import com.samyak.tempboxbeta.network.ApiClient;
 import com.samyak.tempboxbeta.utils.AuthManager;
 import com.samyak.tempboxbeta.utils.Constants;
+import com.samyak.tempboxbeta.utils.GeneratorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,9 @@ public class CreateAccountFragment extends Fragment {
     private TextInputLayout passwordInputLayout;
     private TextInputEditText passwordEditText;
     private MaterialButton createButton;
+    private SlideToActView quickGenerateButton;
+    private MaterialButton generateUsernameButton;
+    private MaterialButton generatePasswordButton;
     private ProgressBar progressBar;
     
     private List<Domain> availableDomains;
@@ -92,6 +97,9 @@ public class CreateAccountFragment extends Fragment {
         passwordInputLayout = view.findViewById(R.id.password_input_layout);
         passwordEditText = view.findViewById(R.id.password_edit_text);
         createButton = view.findViewById(R.id.create_button);
+        quickGenerateButton = view.findViewById(R.id.quick_generate_button);
+        generateUsernameButton = view.findViewById(R.id.generate_username_button);
+        generatePasswordButton = view.findViewById(R.id.generate_password_button);
         progressBar = view.findViewById(R.id.progress_bar);
     }
     
@@ -115,12 +123,71 @@ public class CreateAccountFragment extends Fragment {
         
         domainDropdown.setOnItemClickListener((parent, view, position, id) -> validateForm());
         
+        // Setup click listeners
         createButton.setOnClickListener(v -> createAccount());
+        quickGenerateButton.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+            @Override
+            public void onSlideComplete(SlideToActView slideToActView) {
+                quickGenerateEmail();
+            }
+        });
+        generateUsernameButton.setOnClickListener(v -> generateRandomUsername());
+        generatePasswordButton.setOnClickListener(v -> generateSecurePassword());
+        
+        // Setup end icon clicks for text fields
+        usernameInputLayout.setEndIconOnClickListener(v -> generateRandomUsername());
+    }
+    
+    /**
+     * Mail.tm style instant email generation
+     */
+    private void quickGenerateEmail() {
+        if (availableDomains.isEmpty()) {
+            Toast.makeText(getContext(), "Loading domains, please wait...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Show loading state and disable button
+        quickGenerateButton.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
+        
+        // Auto-generate username and password
+        String randomUsername = GeneratorUtils.generateRandomUsername();
+        String randomPassword = GeneratorUtils.generateSecurePassword();
+        
+        // Select random domain
+        Domain randomDomain = availableDomains.get((int) (Math.random() * availableDomains.size()));
+        
+        // Create account instantly
+        createAccountWithCredentials(randomUsername, randomPassword, randomDomain);
+    }
+    
+    /**
+     * Generate random username
+     */
+    private void generateRandomUsername() {
+        String randomUsername = GeneratorUtils.generateRandomUsername();
+        usernameEditText.setText(randomUsername);
+        
+        // Show toast with generation info
+        Toast.makeText(getContext(), "Random username generated: " + randomUsername, Toast.LENGTH_SHORT).show();
+    }
+    
+    /**
+     * Generate secure password
+     */
+    private void generateSecurePassword() {
+        String securePassword = GeneratorUtils.generateSecurePassword();
+        passwordEditText.setText(securePassword);
+        
+        // Show toast with generation info
+        Toast.makeText(getContext(), "Secure password generated! Length: " + securePassword.length(), Toast.LENGTH_SHORT).show();
     }
     
     private void loadDomains() {
         progressBar.setVisibility(View.VISIBLE);
         createButton.setEnabled(false);
+        quickGenerateButton.setEnabled(false);
         
         ApiClient.getApiService().getDomains(1)
                 .enqueue(new Callback<ApiResponse<Domain>>() {
@@ -166,6 +233,9 @@ public class CreateAccountFragment extends Fragment {
             // Set first domain as default
             domainDropdown.setText(availableDomains.get(0).getDomain(), false);
             validateForm();
+            
+            // Enable quick generate button
+            quickGenerateButton.setEnabled(true);
         } else {
             handleError("No active domains available");
         }
@@ -198,7 +268,7 @@ public class CreateAccountFragment extends Fragment {
         }
         
         // Validate domain selection
-        String selectedDomain = domainDropdown.getText().toString().trim();
+        String selectedDomain = domainDropdown.getText().toString();
         if (selectedDomain.isEmpty()) {
             domainInputLayout.setError("Please select a domain");
             isValid = false;
@@ -210,7 +280,6 @@ public class CreateAccountFragment extends Fragment {
     }
     
     private boolean isValidUsername(String username) {
-        // Allow letters, numbers, dots, and underscores
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._]+$");
         return pattern.matcher(username).matches();
     }
@@ -218,32 +287,44 @@ public class CreateAccountFragment extends Fragment {
     private void createAccount() {
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString();
-        String selectedDomain = domainDropdown.getText().toString().trim();
+        String selectedDomainName = domainDropdown.getText().toString();
         
-        String emailAddress = username + "@" + selectedDomain;
+        Domain selectedDomain = null;
+        for (Domain domain : availableDomains) {
+            if (domain.getDomain().equals(selectedDomainName)) {
+                selectedDomain = domain;
+                break;
+            }
+        }
         
-        Account account = new Account(emailAddress, password);
+        if (selectedDomain == null) {
+            handleError("Please select a valid domain");
+            return;
+        }
+        
+        createAccountWithCredentials(username, password, selectedDomain);
+    }
+    
+    private void createAccountWithCredentials(String username, String password, Domain domain) {
+        String emailAddress = username + "@" + domain.getDomain();
         
         progressBar.setVisibility(View.VISIBLE);
         createButton.setEnabled(false);
+        quickGenerateButton.setEnabled(false);
         
+        Account account = new Account(emailAddress, password);
         ApiClient.getApiService().createAccount(account)
                 .enqueue(new Callback<Account>() {
                     @Override
                     public void onResponse(@NonNull Call<Account> call, @NonNull Response<Account> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             Account createdAccount = response.body();
-                            // Now get the authentication token
                             getAuthToken(emailAddress, password, createdAccount);
                         } else {
                             progressBar.setVisibility(View.GONE);
                             createButton.setEnabled(true);
-                            
-                            if (response.code() == 422) {
-                                handleError("Account already exists or invalid data");
-                            } else {
-                                handleError("Failed to create account");
-                            }
+                            quickGenerateButton.setEnabled(true);
+                            handleError("Failed to create account. Email might already exist.");
                         }
                     }
                     
@@ -251,6 +332,7 @@ public class CreateAccountFragment extends Fragment {
                     public void onFailure(@NonNull Call<Account> call, @NonNull Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         createButton.setEnabled(true);
+                        quickGenerateButton.setEnabled(true);
                         handleError(Constants.ERROR_NETWORK);
                     }
                 });
@@ -258,13 +340,13 @@ public class CreateAccountFragment extends Fragment {
     
     private void getAuthToken(String emailAddress, String password, Account account) {
         Account credentials = new Account(emailAddress, password);
-        
         ApiClient.getApiService().getToken(credentials)
                 .enqueue(new Callback<AuthToken>() {
                     @Override
                     public void onResponse(@NonNull Call<AuthToken> call, @NonNull Response<AuthToken> response) {
                         progressBar.setVisibility(View.GONE);
                         createButton.setEnabled(true);
+                        quickGenerateButton.setEnabled(true);
                         
                         if (response.isSuccessful() && response.body() != null) {
                             AuthToken authToken = response.body();
@@ -272,18 +354,20 @@ public class CreateAccountFragment extends Fragment {
                             // Save authentication data
                             authManager.saveAuthToken(authToken);
                             authManager.saveAccount(account);
-                            
-                            showSuccess(Constants.SUCCESS_ACCOUNT_CREATED);
+                            authManager.savePassword(password);
                             
                             // Clear form
                             clearForm();
+                            
+                            // Show success message
+                            showSuccess("🎉 Email created successfully: " + emailAddress);
                             
                             // Notify listener
                             if (accountCreatedListener != null) {
                                 accountCreatedListener.onAccountCreated();
                             }
                         } else {
-                            handleError("Failed to get authentication token");
+                            handleError("Failed to authenticate with created account");
                         }
                     }
                     
@@ -291,6 +375,7 @@ public class CreateAccountFragment extends Fragment {
                     public void onFailure(@NonNull Call<AuthToken> call, @NonNull Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         createButton.setEnabled(true);
+                        quickGenerateButton.setEnabled(true);
                         handleError(Constants.ERROR_NETWORK);
                     }
                 });
@@ -299,11 +384,6 @@ public class CreateAccountFragment extends Fragment {
     private void clearForm() {
         usernameEditText.setText("");
         passwordEditText.setText("");
-        if (!availableDomains.isEmpty()) {
-            domainDropdown.setText(availableDomains.get(0).getDomain(), false);
-        }
-        
-        // Clear any error messages
         usernameInputLayout.setError(null);
         passwordInputLayout.setError(null);
         domainInputLayout.setError(null);

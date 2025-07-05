@@ -89,4 +89,13 @@
     <color name="gmail_divider">#E8EAED</color>
     <color name="gmail_card_background">#FFFFFF</color>
     <color name="gmail_selected_background">#E8F0FE</color>
+    <color name="background_light">#F5F5F5</color>
+    
+    <!-- Mail.tm Brand Colors -->
+    <color name="mail_tm_primary">#2196F3</color>
+    <color name="mail_tm_primary_dark">#1976D2</color>
+    <color name="mail_tm_accent">#03DAC6</color>
+    <color name="mail_tm_background">#FAFAFA</color>
+    <color name="mail_tm_surface">#FFFFFF</color>
+    <color name="mail_tm_secondary">#FF9800</color>
 </resources>

@@ -11,6 +11,7 @@ public class AuthManager {
     private static final String KEY_TOKEN = "auth_token";
     private static final String KEY_ACCOUNT_ID = "account_id";
     private static final String KEY_EMAIL_ADDRESS = "email_address";
+    private static final String KEY_PASSWORD = "password";
     private static final String KEY_IS_LOGGED_IN = "is_logged_in";
     private static final String KEY_AUTO_EMAIL_GENERATED = "auto_email_generated";
     
@@ -38,9 +39,16 @@ public class AuthManager {
     }
     
     public void saveAccount(Account account) {
-        preferences.edit()
-                .putString(KEY_EMAIL_ADDRESS, account.getAddress())
-                .apply();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(KEY_EMAIL_ADDRESS, account.getAddress());
+        if (account.getPassword() != null) {
+            editor.putString(KEY_PASSWORD, account.getPassword());
+        }
+        editor.apply();
+    }
+
+    public void savePassword(String password) {
+        preferences.edit().putString(KEY_PASSWORD, password).apply();
     }
     
     public String getAuthToken() {
@@ -60,9 +68,15 @@ public class AuthManager {
         return preferences.getString(KEY_EMAIL_ADDRESS, null);
     }
     
+    public String getPassword() {
+        return preferences.getString(KEY_PASSWORD, null);
+    }
+    
     public boolean isLoggedIn() {
         return preferences.getBoolean(KEY_IS_LOGGED_IN, false) && 
-               getAuthToken() != null;
+               getAuthToken() != null && 
+               getAccountId() != null && 
+               getEmailAddress() != null;
     }
     
     public void logout() {
@@ -70,6 +84,7 @@ public class AuthManager {
                 .remove(KEY_TOKEN)
                 .remove(KEY_ACCOUNT_ID)
                 .remove(KEY_EMAIL_ADDRESS)
+                .remove(KEY_PASSWORD)
                 .putBoolean(KEY_IS_LOGGED_IN, false)
                 .apply();
     }
