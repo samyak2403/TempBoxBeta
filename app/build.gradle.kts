@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.samyak.tempboxbeta"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.samyak.tempboxbeta"
         minSdk = 23
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
