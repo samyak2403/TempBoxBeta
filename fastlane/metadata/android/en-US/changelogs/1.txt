@@ -1,0 +1,24 @@
+Initial release of TempBox Beta - Professional temporary email client
+
+Features:
+- Gmail-inspired modern UI with Material Design 3
+- Instant temporary email generation
+- Professional WebView with enterprise-grade security
+- Zero JavaScript execution for maximum safety
+- Smart HTML sanitization and content filtering
+- Pull-to-refresh inbox management
+- Attachment support with professional file handling
+- Dark mode support with system integration
+- Hardware-accelerated 60fps performance
+- Privacy-focused with no tracking or analytics
+
+Security Features:
+- JavaScript completely disabled in WebView
+- Advanced HTML sanitization removes dangerous elements
+- External link blocking prevents malicious redirects
+- SSL/TLS validation with strict certificate verification
+- Content Security Policy implementation
+- Secure token-based authentication
+- Encrypted local storage
+
+Perfect for protecting your privacy when signing up for services, newsletters, or any situation where you need a disposable email address. 

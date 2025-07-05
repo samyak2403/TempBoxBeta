@@ -14,7 +14,7 @@ platform :android do
   
   desc "Generate metadata for F-Droid"
   lane :metadata do
-    # Metadata is fetched from external repository
-    UI.message("Metadata is fetched from external repository, not stored locally")
+    # Metadata is properly configured for F-Droid submission
+    UI.message("Metadata is configured in fastlane/metadata/android/en-US/")
   end
 end 
