@@ -17,8 +17,20 @@
 
 <div align="center">
 
-![TempBox Beta - Sliding Button Feature](1.png)
-*New Sliding Button for Instant Email Generation - Enhanced UX with slide-to-unlock interaction*
+<table style="width: 100%; text-align: center; border-collapse: collapse;">
+  <tr>
+    <td><img src="Screenshots/1.png" width="250px" /></td>
+    <td><img src="Screenshots/2.png" width="250px" /></td>
+    *New Sliding Button for Instant Email Generation - Enhanced UX with slide-to-unlock interaction*
+  </tr>
+  <tr>
+    <td><img src="Screenshots/3.png" width="250px" /></td>
+    <td><img src="Screenshots/4.png" width="250px" /></td>
+  </tr>
+
+</table>
+
+
 
 </div>
 
