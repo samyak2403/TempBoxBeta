@@ -13,6 +13,15 @@
 
 </div>
 
+## 📸 **Screenshots**
+
+<div align="center">
+
+![TempBox Beta - Sliding Button Feature](1.png)
+*New Sliding Button for Instant Email Generation - Enhanced UX with slide-to-unlock interaction*
+
+</div>
+
 ---
 
 ## ✨ **Key Features**
@@ -38,6 +47,14 @@
 - 👤 **Account Management** - Secure temporary email account handling
 - 🔄 **Auto-Refresh** - Smart pull-to-refresh with retry mechanisms
 - 📎 **Attachment Support** - Professional file attachment handling
+
+### 🎯 **Instant Email Generation**
+- 📱 **Slide-to-Create Button** - Modern slide-to-unlock interaction for email creation
+- ⚡ **Quick Generation** - Instantly generate temporary email with smooth animations
+- 🛡️ **Accidental Click Prevention** - Intentional slide gesture prevents unwanted email creation
+- 🎨 **Material Design Integration** - Seamlessly integrated with app theme and colors
+- 🔄 **Auto-Reset** - Button automatically resets after completion for continuous use
+- ✨ **Smooth Animations** - Professional slide animations with haptic feedback
 
 ### 🌐 **Professional WebView Optimization**
 - ⚡ **Performance Excellence**
@@ -155,10 +172,13 @@
 ### 🎯 **Quick Start Guide**
 
 1. **📱 Launch the App** - Open TempBox on your Android device
-2. **➕ Create Account** - Tap "Create Account" to generate a temporary email
-3. **📧 Check Inbox** - View incoming messages in the Gmail-style interface
-4. **👆 Tap Message** - Open messages with the professional WebView
-5. **🔄 Refresh** - Pull down to refresh and check for new messages
+2. **➕ Create Account** - Navigate to "Create Account" tab
+3. **👆 Slide to Generate** - Use the new slide-to-create button for instant email generation
+   - 🎯 **Slide right** on the "🚀 Slide to Create" button for instant email
+   - 📝 **Manual creation** available for custom usernames and passwords
+4. **📧 Check Inbox** - View incoming messages in the Gmail-style interface
+5. **👆 Tap Message** - Open messages with the professional WebView
+6. **🔄 Refresh** - Pull down to refresh and check for new messages
 
 ---
 
@@ -188,7 +208,7 @@
 - **📧 MessageDetailActivity** - Professional message viewer with optimized WebView
 - **📥 InboxFragment** - Gmail-style message list with smart refresh
 - **👤 AccountFragment** - Secure account management interface
-- **➕ CreateAccountFragment** - Temporary email account creation
+- **➕ CreateAccountFragment** - Temporary email account creation with sliding button interaction
 - **🔌 ApiClient** - Retrofit-based API communication layer
 - **🔒 AuthManager** - Secure authentication and token management
 
