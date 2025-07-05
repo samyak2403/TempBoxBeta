@@ -1,0 +1,20 @@
+# Fastfile for F-Droid
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy to F-Droid"
+  lane :fdroid do
+    # This lane is used by F-Droid to build and deploy the app
+    # F-Droid will handle the build process using gradle
+    
+    # Metadata is handled by F-Droid using the metadata directory structure
+    UI.message("Building for F-Droid...")
+  end
+  
+  desc "Generate metadata for F-Droid"
+  lane :metadata do
+    # This lane can be used to generate or update metadata
+    UI.message("Metadata is located in fastlane/metadata/android/")
+  end
+end 
