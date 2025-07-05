@@ -1,17 +1,16 @@
 Categories:
+  - Email
   - Internet
-
 License: MIT
-
-AuthorName: Samyak Kamble
+AuthorName: Samyak
 AuthorEmail: samyakkamble6659@gmail.com
 WebSite: https://github.com/samyak2403/TempBoxBeta
 SourceCode: https://github.com/samyak2403/TempBoxBeta
 IssueTracker: https://github.com/samyak2403/TempBoxBeta/issues
 
 Name: TempBox Beta
+AutoName: TempBox Beta
 Summary: Professional temporary email client with Gmail-inspired design
-
 Description: |
   TempBox Beta is a modern, professional temporary email client for Android that provides secure, disposable email addresses for privacy protection.
 
