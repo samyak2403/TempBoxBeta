@@ -8,32 +8,18 @@ This directory contains the Fastlane configuration for TempBox Beta to support F
 fastlane/
 ├── Appfile                 # App configuration
 ├── Fastfile                # Build lanes for F-Droid
-├── README.md               # This file
-└── metadata/
-    └── android/
-        └── en-US/
-            ├── title.txt                    # App title
-            ├── short_description.txt        # Short description
-            ├── full_description.txt         # Full description
-            ├── changelogs/
-            │   └── 1.txt                   # Version 1.0 changelog
-            └── images/
-                ├── icon.png                # App icon
-                └── phoneScreenshots/       # App screenshots
-                    ├── 1.png
-                    ├── 2.png
-                    ├── 3.png
-                    ├── 4.png
-                    └── logo.png
+└── README.md               # This file
 ```
+
+**Note:** Metadata (descriptions, screenshots, changelogs) is fetched from an external repository and not stored locally.
 
 ## F-Droid Integration
 
 This Fastlane setup enables F-Droid to:
 
-1. **Automatically extract app metadata** from the `metadata/android/en-US/` directory
+1. **Fetch app metadata** from external repository
 2. **Build and deploy** the app using the configuration in `Fastfile`
-3. **Update app descriptions and screenshots** without manual intervention
+3. **Update app descriptions and screenshots** from external source
 4. **Handle version updates** and changelog management
 
 ## Usage
@@ -47,7 +33,4 @@ fastlane android fdroid
 
 ## Metadata Updates
 
-To update app metadata:
-1. Edit the files in `metadata/android/en-US/`
-2. Commit and push changes
-3. F-Droid will automatically pick up the updates 
+App metadata is managed in an external repository and fetched automatically during the F-Droid build process. 
