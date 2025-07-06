@@ -1,0 +1,1 @@
+Secure temporary email client with Gmail-inspired UI and privacy-focused features 

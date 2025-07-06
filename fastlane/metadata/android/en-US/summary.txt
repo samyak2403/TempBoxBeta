@@ -1,1 +1,1 @@
-Professional temporary email client 
+Professional temporary email client with Gmail-inspired design 

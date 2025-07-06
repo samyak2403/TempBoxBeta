@@ -14,7 +14,7 @@ platform :android do
   
   desc "Generate metadata for F-Droid"
   lane :metadata do
-    # This lane can be used to generate or update metadata
-    UI.message("Metadata is located in fastlane/metadata/android/")
+    # Metadata is properly configured for F-Droid submission
+    UI.message("Metadata is configured in fastlane/metadata/android/en-US/")
   end
 end 

@@ -13,8 +13,8 @@ fastlane/
     └── android/
         └── en-US/
             ├── title.txt                    # App title
-            ├── short_description.txt        # Short description
-            ├── full_description.txt         # Full description
+            ├── summary.txt                  # Short description
+            ├── description.txt              # Full description
             ├── changelogs/
             │   └── 1.txt                   # Version 1.0 changelog
             └── images/
