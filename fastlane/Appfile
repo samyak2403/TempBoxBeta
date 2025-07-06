@@ -1,7 +1,17 @@
-# Appfile for TempBox Beta
+# Fastlane Appfile for TempBox Beta
+# This file is used by fastlane to configure app-specific information
 
-# The package name of the application
+# The bundle identifier of your app
+app_identifier("com.samyak.tempboxbeta")
+
+# Your Apple ID or Google Play Developer account email
+# apple_id("your-apple-id@example.com")
+
+# For Android, you can also specify the package name
 package_name("com.samyak.tempboxbeta")
 
-# F-Droid configuration
-# F-Droid will handle the build and deployment process 
+# You can uncomment the lines below to automatically use the latest version of fastlane
+# update_fastlane
+
+# For F-Droid, we don't need signing certificates or developer accounts
+# since F-Droid builds and signs the app using their own keys 

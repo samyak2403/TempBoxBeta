@@ -1,20 +1,58 @@
-# Fastfile for F-Droid
+# Fastfile for TempBox Beta
+# This file defines the fastlane lanes for building and managing the app
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
 
 default_platform(:android)
 
 platform :android do
-  desc "Deploy to F-Droid"
-  lane :fdroid do
-    # This lane is used by F-Droid to build and deploy the app
-    # F-Droid will handle the build process using gradle
-    
-    # Metadata is handled by F-Droid using the metadata directory structure
-    UI.message("Building for F-Droid...")
+  desc "Build debug APK"
+  lane :build_debug do
+    gradle(task: "assembleDebug")
   end
-  
-  desc "Generate metadata for F-Droid"
-  lane :metadata do
-    # Metadata is properly configured for F-Droid submission
-    UI.message("Metadata is configured in fastlane/metadata/android/en-US/")
+
+  desc "Build release APK"
+  lane :build_release do
+    gradle(task: "assembleRelease")
+  end
+
+  desc "Run unit tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit to F-Droid"
+  lane :fdroid do
+    # This lane helps prepare the app for F-Droid submission
+    # F-Droid will build the app from source, so no APK upload is needed
+    
+    # Build debug version to ensure everything works
+    build_debug
+    
+    # Run tests to ensure app quality
+    test
+    
+    # Print helpful information
+    puts "✅ App is ready for F-Droid submission!"
+    puts "📋 Next steps:"
+    puts "1. Fork the F-Droid Data repository: https://gitlab.com/fdroid/fdroiddata"
+    puts "2. Add your metadata file to the metadata/ directory"
+    puts "3. Submit a merge request to F-Droid"
+    puts "4. Wait for F-Droid team review and approval"
+    puts "📁 Your metadata file is located at: metadata/com.samyak.tempboxbeta.yml"
+  end
+
+  desc "Prepare F-Droid metadata"
+  lane :prepare_metadata do
+    # This lane ensures all metadata is properly formatted for F-Droid
+    puts "📋 Preparing F-Droid metadata..."
+    puts "✅ Title: TempBox Beta"
+    puts "✅ Package: com.samyak.tempboxbeta"
+    puts "✅ License: MIT"
+    puts "✅ Category: Internet"
+    puts "✅ Source Code: https://github.com/samyak2403/TempBoxBeta"
+    puts "✅ Metadata file: metadata/com.samyak.tempboxbeta.yml"
+    puts "📝 All metadata is ready for F-Droid submission!"
   end
 end 

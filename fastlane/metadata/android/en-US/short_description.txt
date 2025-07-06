@@ -1,1 +1,1 @@
-Secure temporary email client with Gmail-inspired UI and privacy-focused features 
+Gmail-inspired temporary email client powered by Mail.tm 

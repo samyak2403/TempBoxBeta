@@ -1,1 +1,60 @@
-﻿
+Categories:
+  - Internet
+License: MIT
+AuthorName: Samyak Kamble
+AuthorEmail: samyakkamble2403@gmail.com
+SourceCode: https://github.com/samyak2403/TempBoxBeta
+IssueTracker: https://github.com/samyak2403/TempBoxBeta/issues
+Changelog: https://github.com/samyak2403/TempBoxBeta/releases
+Donate: https://github.com/samyak2403/TempBoxBeta
+AutoName: TempBox Beta
+Summary: Gmail-inspired temporary email client powered by Mail.tm
+Description: |-
+    TempBox Beta is a modern, Gmail-inspired temporary email client for Android that provides secure, disposable email addresses powered by Mail.tm.
+    
+    '''Key Features:'''
+    
+    * '''Gmail-Inspired Design:''' Professional UI/UX with Gmail's exact color palette and design language
+    * '''Instant Email Generation:''' Slide-to-create button for quick temporary email creation
+    * '''Secure WebView:''' Enterprise-grade security with JavaScript disabled and content sanitization
+    * '''Material Design 3:''' Modern Material Design components with dark mode support
+    * '''No Tracking:''' Privacy-first approach with zero analytics or user tracking
+    * '''Attachment Support:''' Professional file attachment handling and download
+    * '''Auto-Refresh:''' Smart pull-to-refresh with retry mechanisms
+    
+    '''Technical Excellence:'''
+    
+    * Modern ConstraintLayout architecture for optimal performance
+    * Hardware acceleration for 60fps rendering
+    * Smart caching and offline support
+    * Battery-efficient background task management
+    * SSL/TLS validation with bank-level security standards
+    
+    '''Privacy & Security:'''
+    
+    * No unnecessary data collection
+    * Encrypted local data storage
+    * HTML content sanitization removes malicious scripts
+    * External resource blocking prevents unauthorized data leaks
+    * Token-based authentication with automatic refresh
+    
+    Perfect for users who need temporary email addresses for website registrations, testing, or protecting their primary email from spam.
+    
+    Powered by Mail.tm's free temporary email service.
+
+RepoType: git
+Repo: https://github.com/samyak2403/TempBoxBeta.git
+
+Builds:
+  - versionName: '1.0'
+    versionCode: 1
+    commit: v1.0
+    subdir: app
+    gradle:
+      - yes
+    prebuild: sed -i -e '/signingConfigs/,+10d' build.gradle.kts
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: '1.0'
+CurrentVersionCode: 1 

@@ -1,1 +1,1 @@
-Professional temporary email client with Gmail-inspired design 
+Professional temporary email client with Gmail-inspired design and enterprise-grade security features. Create secure, disposable email addresses for registrations and privacy protection. Features instant email generation, attachment support, and a clean interface powered by Mail.tm service. No tracking, no ads, completely open-source. 
