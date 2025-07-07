@@ -49,6 +49,13 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
+
+    applicationVariants.all {
+        outputs.all {
+            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            output.outputFileName = "TempBox-Beta-${versionName}-${name}.apk"
+        }
+    }
 }
 
 configurations.all {
