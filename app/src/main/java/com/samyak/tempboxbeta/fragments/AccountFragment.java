@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.ncorti.slidetoact.SlideToActView;
 import com.samyak.tempboxbeta.R;
 import com.samyak.tempboxbeta.activities.FaqActivity;
 import com.samyak.tempboxbeta.activities.LoginActivity;
@@ -53,7 +54,7 @@ public class AccountFragment extends Fragment {
     private MaterialButton faqButton;
     private MaterialButton loginButtonActions;
     private MaterialButton logoutButton;
-    private MaterialButton deleteAccountButton;
+    private SlideToActView deleteAccountButton;
     private MaterialButton goToCreateButton;
     private MaterialButton loginButtonMain;
     private View noAccountState;
@@ -172,7 +173,19 @@ public class AccountFragment extends Fragment {
             logoutButton.setOnClickListener(v -> showLogoutConfirmation());
         }
         if (deleteAccountButton != null) {
-            deleteAccountButton.setOnClickListener(v -> showDeleteConfirmation());
+            deleteAccountButton.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+                @Override
+                public void onSlideComplete(SlideToActView slideToActView) {
+                    performDeleteAccount();
+                }
+            });
+            // Reset the slide when resetted
+            deleteAccountButton.setOnSlideResetListener(new SlideToActView.OnSlideResetListener() {
+                @Override
+                public void onSlideReset(SlideToActView slideToActView) {
+                    // Optional: Add any reset behavior here
+                }
+            });
         }
         if (goToCreateButton != null) {
             goToCreateButton.setOnClickListener(v -> {
@@ -466,32 +479,23 @@ public class AccountFragment extends Fragment {
         Toast.makeText(getContext(), "Generating new temporary email...", Toast.LENGTH_SHORT).show();
     }
     
-    private void showDeleteConfirmation() {
-        if (getContext() == null) return;
-        
-        new AlertDialog.Builder(getContext())
-                .setTitle("Delete Account")
-                .setMessage("Are you sure you want to delete your account? This action cannot be undone and all messages will be permanently lost.")
-                .setPositiveButton("Delete", (dialog, which) -> performDeleteAccount())
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
-    
     private void performDeleteAccount() {
         String token = authManager.getFormattedAuthToken();
         String accountId = authManager.getAccountId();
         
         if (token == null || accountId == null) {
             handleError("Unable to delete account");
+            if (deleteAccountButton != null) {
+                deleteAccountButton.resetSlider();
+            }
             return;
         }
         
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-        if (deleteAccountButton != null) {
-            deleteAccountButton.setEnabled(false);
-        }
+        
+        // Note: Don't need to disable the SlideToActView as it automatically locks
         
         ApiClient.getApiService().deleteAccount(token, accountId)
                 .enqueue(new Callback<Void>() {
@@ -499,9 +503,6 @@ public class AccountFragment extends Fragment {
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                         if (progressBar != null) {
                             progressBar.setVisibility(View.GONE);
-                        }
-                        if (deleteAccountButton != null) {
-                            deleteAccountButton.setEnabled(true);
                         }
                         
                         if (response.isSuccessful()) {
@@ -516,6 +517,10 @@ public class AccountFragment extends Fragment {
                                     Toast.LENGTH_LONG).show();
                         } else {
                             handleError("Failed to delete account");
+                            // Reset the slider on failure
+                            if (deleteAccountButton != null) {
+                                deleteAccountButton.resetSlider();
+                            }
                         }
                     }
                     
@@ -524,10 +529,13 @@ public class AccountFragment extends Fragment {
                         if (progressBar != null) {
                             progressBar.setVisibility(View.GONE);
                         }
-                        if (deleteAccountButton != null) {
-                            deleteAccountButton.setEnabled(true);
-                        }
+                        
                         handleError(Constants.ERROR_NETWORK);
+                        
+                        // Reset the slider on failure
+                        if (deleteAccountButton != null) {
+                            deleteAccountButton.resetSlider();
+                        }
                     }
                 });
     }

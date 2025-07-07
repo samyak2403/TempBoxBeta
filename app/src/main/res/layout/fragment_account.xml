@@ -368,20 +368,32 @@
                         android:alpha="0.3"
                         android:layout_marginHorizontal="16dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/delete_account_button"
-                        style="@style/Widget.Material3.Button.TextButton"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/delete_account"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:textColor="?attr/colorError"
-                        android:textAlignment="textStart"
-                        android:gravity="start|center_vertical"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        app:icon="@drawable/ic_delete"
-                        app:iconTint="?attr/colorError"
-                        app:iconGravity="start" />
+                        android:gravity="center"
+                        android:padding="8dp"/>
+
+                    <com.ncorti.slidetoact.SlideToActView
+                        android:id="@+id/delete_account_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/delete_account"
+                        app:text="⚠️ Slide to Delete Account"
+                        app:text_color="@android:color/white"
+                        app:slider_icon="@drawable/ic_delete"
+                        app:slider_icon_color="@color/black"
+                        app:outer_color="?attr/colorError"
+                        app:inner_color="?attr/colorSurfaceContainer"
+                        app:border_radius="16dp"
+                        app:animation_duration="300"
+                        app:slider_height="60dp"
+                        app:text_size="16sp"/>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
